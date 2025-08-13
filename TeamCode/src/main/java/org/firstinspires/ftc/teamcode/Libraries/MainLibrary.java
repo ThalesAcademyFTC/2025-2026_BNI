@@ -31,7 +31,7 @@ import java.util.List;
 
 
 
-public class ArtifactV1 {
+public class mainLibrary {
     //This class will act as our "goldfish" or "robot class for the year
     public HardwareMap hwMap;
 
