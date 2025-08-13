@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
 
 import android.graphics.Path;
+import java.lang.Math
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
@@ -29,7 +30,19 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 
-public class FieldCentricMovement {
+public class teleOpLibrary {
 
+    //we love billy dignam
+
+    public void driverCentricMovement(double x, double y, double turn) {
+
+        //math yippeee
+
+       double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(turn), 1);
+
+            double motorFLPower = (y + x + turn) / denominator;
+            double motorFR
+
+    }
 
 }

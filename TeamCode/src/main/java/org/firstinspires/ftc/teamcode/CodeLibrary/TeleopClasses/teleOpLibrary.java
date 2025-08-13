@@ -38,7 +38,7 @@ public class teleOpLibrary {
 
         //math yippeee
 
-       // double denominator = Math.max
+       double denominator = Math.max(Math.abs(y))
 
     }
 
