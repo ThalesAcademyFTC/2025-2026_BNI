@@ -19,11 +19,11 @@ public class mainLibrary {
     public LinearOpMode auton;
     public double ElapsedTime;
 
-    public enum Drive {
+    public enum Drivetrain {
         MECHANUM
     }
 
-    public Drive drive;
+    public Drivetrain drive;
 
     public Telemetry telemetry;
 
@@ -37,7 +37,7 @@ public class mainLibrary {
 
     double tickPerInch = 50
 
-    public ArtifactV1(OpMode opMode, Drivetrain drive) {
+    public mainLibrary(OpMode opMode, Drivetrain drive) {
 
         this.hwMap = opMode.hardwareMap;
 
@@ -48,7 +48,7 @@ public class mainLibrary {
         setUpHardware();
     }
 
-    public ArtifactV1(LinearOpMode opMode, Drivetrain type) {
+    public mainLibrary(LinearOpMode opMode, Drivetrain type) {
 
         this.auton = opMode;
 
@@ -61,7 +61,7 @@ public class mainLibrary {
         setUpHardware;
     }
 
-    public ArtifactV1(HardwareMap hardwareMap, Drivetrain drive) {
+    public mainLibrary(HardwareMap hardwareMap, Drivetrain drive) {
 
         this.hwMap = hardwareMap;
 
