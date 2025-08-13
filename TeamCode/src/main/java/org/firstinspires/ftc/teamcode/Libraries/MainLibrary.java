@@ -29,6 +29,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 
+
+
 public class ArtifactV1 {
     //This class will act as our "goldfish" or "robot class for the year
     public HardwareMap hwMap;
@@ -52,7 +54,7 @@ public class ArtifactV1 {
 
     public Servo servo1;
 
-    public ArtifactV1(OpMode opMode, Drive drive) {
+    public ArtifactV1(OpMode opMode, Drivetrain drive) {
 
         this.hwMap = opMode.hardwareMap;
 
@@ -61,6 +63,28 @@ public class ArtifactV1 {
         this.telemetry = opMode.telemetry;
 
         setUpHardware();
+    }
+
+    public ArtifactV1(LinearOpMode opMode, Drivetrain type) {
+
+        this.auton = opMode;
+
+        hwMap = opMode.hardwareMap;
+
+        telemetry = opMode.telemetry;
+
+        drive = type;
+
+        setUpHardware;
+    }
+
+    public ArtifactV1(HardwareMap hardwareMap, Drivetrain drive) {
+
+        this.hwMap = hardwareMap;
+
+        this.drive = Drivetrain;
+
+        setUpHardware;
     }
     public void setUpHardware() {
         //motors gotted in hardware map
@@ -74,15 +98,11 @@ public class ArtifactV1 {
 
         servo1 = hwMap.servo.get("Servo1");
 
+        //all motors defined here
 
+        allMotors = new DcMotorEx[]{motorBL, motorBR, motorFL, motorFR};
 
-
-
-
-
-
-
-
+        
     }
 }
 
