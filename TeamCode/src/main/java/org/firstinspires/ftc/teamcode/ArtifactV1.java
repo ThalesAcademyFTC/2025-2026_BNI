@@ -74,7 +74,7 @@ public class ArtifactV1 {
 
         servo1 = hwMap.servo.get("Servo1");
 
-        allMotors = new DcMotorEx{motorFL, motorFR, motorBL, motorBR}
+
 
 
 
