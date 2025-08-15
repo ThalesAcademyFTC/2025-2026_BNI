@@ -13,25 +13,21 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 public class mainLibrary {
-    //This class will act as our "goldfish" or "robot class for the year
+    //This class will act as our "goldfish" or "robot" class for the year
     public HardwareMap hwMap;
 
     public LinearOpMode auton;
     public double ElapsedTime;
 
-    public enum Drivetrain {
-        MECHANUM
-    }
-
     public Drivetrain drive;
 
     public Telemetry telemetry;
 
-    //defines motors to all classes that call Artifact
+    //defines motors to all classes that call main/mainlibrary
 
     public DcMotorEx motorFL, motorFR, motorBL, motorBR;
 
-    public DcMotorEx allMotors;
+    public DcMotorEx[] allMotors;
 
     public Servo servo1;
 
@@ -92,6 +88,12 @@ public class mainLibrary {
         motorBR.setPower(motorBRPower);
 
     }
+
+    public void setServo1(double position) {
+
+        servo1.setPosition(position);
+
+    }
     public void setUpHardware() {
         //motors gotted in hardware map
 
@@ -106,12 +108,12 @@ public class mainLibrary {
 
         //all motors defined here
 
-        //allMotors =  new DcMotorEx[motorBL, motorBR, motorFL, motorFR] {};
+        allMotors =  new DcMotorEx[] {motorBL, motorBR, motorFL, motorFR};
 
 
     }
 
-/*    public void resetDriveEncoders() {
+      public void resetDriveEncoders() {
 
         for (DcMotor x : allMotors) {
 
@@ -120,5 +122,5 @@ public class mainLibrary {
             x.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
     }
-*/}
+}
 

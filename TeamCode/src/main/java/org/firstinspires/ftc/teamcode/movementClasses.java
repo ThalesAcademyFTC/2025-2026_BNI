@@ -37,30 +37,30 @@ public class movementClasses {
 
         int TickTarget = (int) Math.round(inches* main.tickPerInch);
 
-        //main.resetDriveEncoders();
+        main.resetDriveEncoders();
 
         main.motorFL.setTargetPosition(TickTarget);
         main.motorFR.setTargetPosition(TickTarget);
         main.motorBL.setTargetPosition(TickTarget);
         main.motorBR.setTargetPosition(TickTarget);
 
-        /*for (DcMotor x : allMotors) {
+        for (DcMotor x : allMotors) {
 
             x.setMode(dcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         }
-*/
+
         main.driverCentricMovement(speed , 0 , 0);
 
-       /* for (DcMotor x : allMotors) {
+        or (DcMotor x : allMotors) {
 
             x.setMode(DcMotor.RunMode.RUN_TO_POSITION)
 
         }
-*/
-       // main.waitForMotors();
 
-       // main.resetDriveEncoders();
+       main.waitForMotors();
+
+       main.resetDriveEncoders();
 
     }
 

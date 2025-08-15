@@ -25,10 +25,10 @@ public class driverCentricMovement {
              by the maximum value to limit power
             */
 
-            //motorFL.setPower(motorFLPower);
-            //motorFR.setPower(motorFRPower);
-            //motorBL.setPower(motorBLPower);
-            //motorBR.setPower(motorBRPower);
+            motorFL.setPower(motorFLPower);
+            motorFR.setPower(motorFRPower);
+            motorBL.setPower(motorBLPower);
+            motorBR.setPower(motorBRPower);
 
     }
 
