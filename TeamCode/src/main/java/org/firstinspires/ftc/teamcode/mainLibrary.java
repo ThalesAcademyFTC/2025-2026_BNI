@@ -35,7 +35,7 @@ public class mainLibrary {
 
     public Servo servo1;
 
-    double tickPerInch = 50
+    double tickPerInch = 50;
 
     public mainLibrary(OpMode opMode, Drivetrain drive) {
 
@@ -58,16 +58,39 @@ public class mainLibrary {
 
         drive = type;
 
-        setUpHardware;
+        setUpHardware();
     }
 
     public mainLibrary(HardwareMap hardwareMap, Drivetrain drive) {
 
         this.hwMap = hardwareMap;
 
-        this.drive = Drivetrain;
+        this.drive = drive;
 
-        setUpHardware;
+        setUpHardware();
+    }
+
+    public void driverCentricMovement(double x, double y, double turn) {
+
+        //math yippeee
+
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(turn), 1);
+
+        double motorFLPower = (y + x + turn) / denominator;
+        double motorFRPower = (y - x + turn) / denominator;
+        double motorBLPower = (y - x - turn) / denominator;
+        double motorBRPower = (y + x - turn) / denominator;
+
+            /*
+            divides the value of a stick's x and y value as well as another stick's turn value (can be x or y)
+             by the maximum value to limit power
+            */
+
+        motorFL.setPower(motorFLPower);
+        motorFR.setPower(motorFRPower);
+        motorBL.setPower(motorBLPower);
+        motorBR.setPower(motorBRPower);
+
     }
     public void setUpHardware() {
         //motors gotted in hardware map
@@ -83,12 +106,12 @@ public class mainLibrary {
 
         //all motors defined here
 
-        allMotors = new DcMotorEx[]{motorBL, motorBR, motorFL, motorFR};
+        //allMotors =  new DcMotorEx[motorBL, motorBR, motorFL, motorFR] {};
 
-        
+
     }
 
-    public void resetDriveEncoders() {
+/*    public void resetDriveEncoders() {
 
         for (DcMotor x : allMotors) {
 
@@ -97,5 +120,5 @@ public class mainLibrary {
             x.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
     }
-}
+*/}
 

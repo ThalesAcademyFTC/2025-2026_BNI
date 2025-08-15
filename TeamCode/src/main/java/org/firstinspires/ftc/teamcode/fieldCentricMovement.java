@@ -5,9 +5,9 @@ package org.firstinspires.ftc.teamcode;
 
 public class fieldCentricMovement {
 
+    public mainLibrary main;
 
-
-    public void fieldCentricMovement(double y, double x, double rx){
+    public fieldCentricMovement(double y, double x, double rx) {
         
         /* This stuff goes in teleop 
         double y = -gamepad1.left_stick_y;
@@ -15,10 +15,10 @@ public class fieldCentricMovement {
         double rx = gamepad1.right_stick_x;
         */
 
-        frontLeftMotor.setPower(y + x + rx); 
-        backLeftMotor.setPower(y - x + rx);
-        frontRightMotor.setPower(y - x - rx);
-        backRightMotor.setPower(y + x - rx);
+        main.motorFL.setPower(y + x + rx);
+        main.motorFR.setPower(y - x + rx);
+        main.motorBR.setPower(y - x - rx);
+        main.motorBL.setPower(y + x - rx);
     }
 
 }

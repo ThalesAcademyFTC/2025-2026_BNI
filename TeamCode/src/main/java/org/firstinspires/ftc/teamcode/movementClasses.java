@@ -31,36 +31,36 @@ import java.util.List;
 
 public class movementClasses {
 
-    public mainLibrary mainLibrary;
+    public mainLibrary main;
 
     public void moveForwardInches(double inches, double speed) {
 
-        int TickTarget = (int) Math.round(inches*tickPerInch);
+        int TickTarget = (int) Math.round(inches* main.tickPerInch);
 
-        resetDriveEncoders;
+        //main.resetDriveEncoders();
 
-        motorFL.setTargetPosition(TickTarget);
-        motorFR.setTargetPosition(TickTarget);
-        motorBL.setTargetPosition(TickTarget);
-        motorBR.setTargetPosition(TickTarget);
+        main.motorFL.setTargetPosition(TickTarget);
+        main.motorFR.setTargetPosition(TickTarget);
+        main.motorBL.setTargetPosition(TickTarget);
+        main.motorBR.setTargetPosition(TickTarget);
 
-        for (DcMotor x : allMotors) {
+        /*for (DcMotor x : allMotors) {
 
             x.setMode(dcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         }
+*/
+        main.driverCentricMovement(speed , 0 , 0);
 
-        driverCentricMovement(speed , 0 , 0);
-
-        for (DcMotor x : allMotors) {
+       /* for (DcMotor x : allMotors) {
 
             x.setMode(DcMotor.RunMode.RUN_TO_POSITION)
 
         }
+*/
+       // main.waitForMotors();
 
-        waitForMotors;
-
-        resetDriveEncoders;
+       // main.resetDriveEncoders();
 
     }
 
