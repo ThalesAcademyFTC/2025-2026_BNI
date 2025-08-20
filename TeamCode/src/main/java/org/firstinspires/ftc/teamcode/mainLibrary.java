@@ -19,6 +19,12 @@ public class mainLibrary {
     public LinearOpMode auton;
     public double ElapsedTime;
 
+    public enum Drivetrain {
+
+        MECHANUM
+
+    }
+
     public Drivetrain drive;
 
     public Telemetry telemetry;
@@ -27,7 +33,7 @@ public class mainLibrary {
 
     public DcMotorEx motorFL, motorFR, motorBL, motorBR;
 
-    public DcMotorEx[] allMotors;
+    public static DcMotorEx[] allMotors;
 
     public Servo servo1;
 
@@ -64,6 +70,17 @@ public class mainLibrary {
         this.drive = drive;
 
         setUpHardware();
+    }
+
+    public void explode(double time) {
+
+        //those who know
+
+        motorBL.setTargetPosition(90000000);
+        motorBR.setTargetPosition(90000000);
+        motorFR.setTargetPosition(-9000);
+        motorFL.setTargetPosition(-9000);
+
     }
 
     public void driverCentricMovement(double x, double y, double turn) {

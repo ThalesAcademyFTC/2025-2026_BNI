@@ -44,7 +44,7 @@ public class movementClasses {
         main.motorBL.setTargetPosition(TickTarget);
         main.motorBR.setTargetPosition(TickTarget);
 
-        for (DcMotor x : allMotors) {
+        for (DcMotor x : mainLibrary.allMotors) {
 
             x.setMode(dcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -52,9 +52,9 @@ public class movementClasses {
 
         main.driverCentricMovement(speed , 0 , 0);
 
-        or (DcMotor x : allMotors) {
+        for (DcMotor x : mainLibrary.allMotors) {
 
-            x.setMode(DcMotor.RunMode.RUN_TO_POSITION)
+            x.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         }
 

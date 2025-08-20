@@ -9,7 +9,7 @@ public class driverCentricMovement {
 
     public mainLibrary mainLibrary;
 
-    public driverCentricMovement(double x, double y, double turn) {
+    public void movement(double x, double y, double turn) {
 
         //math yippeee
 
@@ -25,10 +25,10 @@ public class driverCentricMovement {
              by the maximum value to limit power
             */
 
-            motorFL.setPower(motorFLPower);
-            motorFR.setPower(motorFRPower);
-            motorBL.setPower(motorBLPower);
-            motorBR.setPower(motorBRPower);
+            mainLibrary.motorFL.setPower(motorFLPower);
+            mainLibrary.motorFR.setPower(motorFRPower);
+            mainLibrary.motorBL.setPower(motorBLPower);
+            mainLibrary.motorBR.setPower(motorBRPower);
 
     }
 
