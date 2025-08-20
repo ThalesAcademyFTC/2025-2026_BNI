@@ -5,13 +5,13 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gam
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp
-public class Teleop{
-    public driverCentricMovement driverCentricMovement;
+public class TeleopFieldC {
+    public fieldCentricMovement fieldCentricMovement;
 
     public void init() {
 
     }
     public void loop() {
-        driverCentricMovement.movement(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+        fieldCentricMovement.fieldMovement(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
     }
 }

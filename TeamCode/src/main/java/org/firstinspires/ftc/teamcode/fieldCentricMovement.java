@@ -7,7 +7,7 @@ public class fieldCentricMovement {
 
     public mainLibrary main;
 
-    public fieldCentricMovement(double y, double x, double rx) {
+    public void fieldMovement(double y, double x, double rx) {
         
         /* This stuff goes in teleop 
         double y = -gamepad1.left_stick_y;
