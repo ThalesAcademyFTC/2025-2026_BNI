@@ -37,6 +37,8 @@ public class mainLibrary {
 
     public Servo servo1;
 
+    public
+
     double tickPerInch = 50;
 
     public mainLibrary(OpMode opMode, Drivetrain drive) {
