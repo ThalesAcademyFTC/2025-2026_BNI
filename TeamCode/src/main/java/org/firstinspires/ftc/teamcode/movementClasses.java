@@ -46,7 +46,7 @@ public class movementClasses {
 
         for (DcMotor x : mainLibrary.allMotors) {
 
-            x.setMode(dcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            x.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         }
 

@@ -11,7 +11,7 @@ public class fieldCentricMovement {
         
         /* This stuff goes in teleop 
         double y = -gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x * 1.1; //stick drift :(
+        double x = gamepad1.left_stick_x * 1.1;   stick drift :(
         double rx = gamepad1.right_stick_x;
         */
 
