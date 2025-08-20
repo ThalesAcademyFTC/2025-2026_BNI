@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-//import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
@@ -44,7 +44,7 @@ public class movementClasses {
         main.motorBL.setTargetPosition(TickTarget);
         main.motorBR.setTargetPosition(TickTarget);
 
-        for (DcMotor x : mainLibrary.allMotors) {
+        for (DcMotor x : mainLibrary.allMotors ) {
 
             x.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -57,6 +57,7 @@ public class movementClasses {
             x.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         }
+
 
        main.waitForMotors();
 
