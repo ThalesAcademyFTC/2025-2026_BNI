@@ -57,4 +57,11 @@ public class sensorLibrary {
         }
     }
 
+    // public int thisFunctionFindstheDistanceontheDistanceSensor() {
+    //   int distance = mainLibrary.distanceSensor.getDistance();
+
+    //}
+
+
+
 }

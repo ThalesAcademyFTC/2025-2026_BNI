@@ -158,12 +158,9 @@ public class mainLibrary {
         distanceSensor = (Rev2mDistanceSensor) hwMap.opticalDistanceSensor.get("DistanceSensor");
         colorSensor = (RevColorSensorV3) hwMap.colorSensor.get("ColorSensor");
 
-
-
         //all motors defined here
 
         allMotors =  new DcMotorEx[] {motorBL, motorBR, motorFL, motorFR};
-
 
     }
 
