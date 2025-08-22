@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 @TeleOp
 public class ContollerTestTeleop {
+}
+
 
     public mainLibrary mainLibrary;
 
@@ -87,4 +89,4 @@ public class ContollerTestTeleop {
 
     }
 
-}
+}*/

@@ -3,9 +3,12 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
 
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+import com.qualcomm.hardware.rev.Rev9AxisImuOrientationOnRobot;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -53,7 +56,13 @@ public class mainLibrary {
 
     public Servo servo1;
 
-    public
+    public RevColorSensorV3 colorSensor;
+
+    public RevTouchSensor touchSensor;
+
+    public Rev2mDistanceSensor lengthAnalyzer;
+
+    public Rev9AxisImuOrientationOnRobot baybaLoveMe;
 
     double tickPerInch = 50;
 
@@ -140,6 +149,10 @@ public class mainLibrary {
         //servos gotted in hardware map
 
         servo1 = hwMap.servo.get("Servo1");
+
+        //sensors defined here
+
+
 
         //all motors defined here
 
