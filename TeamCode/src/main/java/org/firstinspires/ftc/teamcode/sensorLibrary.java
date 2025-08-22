@@ -57,4 +57,11 @@ public class sensorLibrary {
         }
     }
 
+        public boolean touchSensorState(boolean state) {
+            return state = mainLibrary.touchSensor.isPressed();
+            }
+
+
+
 }
+
