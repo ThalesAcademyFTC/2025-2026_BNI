@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
 
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+import com.qualcomm.hardware.rev.Rev9AxisImu;
 import com.qualcomm.hardware.rev.Rev9AxisImuOrientationOnRobot;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
@@ -18,6 +19,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 //import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -60,9 +62,11 @@ public class mainLibrary {
 
     public RevTouchSensor touchSensor;
 
-    public Rev2mDistanceSensor lengthAnalyzer;
+    public Rev2mDistanceSensor distanceSensor;
 
-    public Rev9AxisImuOrientationOnRobot baybaLoveMe;
+    public WebcamName camera;
+
+    public Rev9AxisImu ohMyCog;
 
     double tickPerInch = 50;
 
@@ -103,11 +107,7 @@ public class mainLibrary {
 
         //those who know
 
-        motorBL.setTargetPosition(90000000);
-        motorBR.setTargetPosition(90000000);
-        motorFR.setTargetPosition(-9000);
-        motorFL.setTargetPosition(-9000);
-
+        System.exit(0);
     }
 
     public void driverCentricMovement(double x, double y, double turn) {
@@ -151,6 +151,10 @@ public class mainLibrary {
         servo1 = hwMap.servo.get("Servo1");
 
         //sensors defined here
+
+        touchSensor = (RevTouchSensor) hwMap.touchSensor.get("TouchSensor");
+        distanceSensor = (Rev2mDistanceSensor) hwMap.opticalDistanceSensor.get("DistanceSensor");
+        colorSensor = (RevColorSensorV3) hwMap.colorSensor.get("ColorSensor");
 
 
 
