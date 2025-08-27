@@ -1,36 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
-
-import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
-import com.qualcomm.hardware.rev.Rev9AxisImu;
-import com.qualcomm.hardware.rev.Rev9AxisImuOrientationOnRobot;
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
-import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.hardware.rev.RevTouchSensor;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 //import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import java.util.List;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 public class sensorLibrary {
@@ -56,11 +30,42 @@ public class sensorLibrary {
                 return false;
         }
     }
+    public String detectColor() {
+        String color = "Cannot detect";
+        if (isColor("red")) {
 
-        public boolean touchSensorState(boolean state) {
-            return state = mainLibrary.touchSensor.isPressed();
-            }
-//happy
+            return color = "red";
+
+        }
+        if (isColor("blue")) {
+
+            return color = "blue";
+
+        }
+        if (isColor("green")) {
+
+            return color = "green";
+
+        }
+        if (isColor("white")) {
+
+            return color = "white";
+
+        }
+        return color;
+    }
+
+    public boolean touchSensorState() {
+        boolean state;
+        return state = mainLibrary.touchSensor.isPressed();
+    }
+
+    public double distanceFromSensor() {
+        //CM for it being a 2m distance sensor, INCHES for correlating to tick to inches
+        return mainLibrary.distanceSensor.getDistance(DistanceUnit.CM);
+    }
+//not happy
+
 
 
 }

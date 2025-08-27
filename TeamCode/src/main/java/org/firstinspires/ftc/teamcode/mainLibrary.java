@@ -72,6 +72,8 @@ public class mainLibrary {
 
     double tickPerInch = 50;
 
+
+
     public mainLibrary(OpMode opMode, Drivetrain drive) {
 
         this.hwMap = opMode.hardwareMap;
@@ -161,6 +163,8 @@ public class mainLibrary {
         //all motors defined here
 
         allMotors =  new DcMotorEx[] {motorBL, motorBR, motorFL, motorFR};
+
+
 
     }
 
