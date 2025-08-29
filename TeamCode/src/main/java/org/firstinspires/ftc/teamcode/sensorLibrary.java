@@ -4,12 +4,20 @@ package org.firstinspires.ftc.teamcode;
 //import com.qualcomm.robotcore.hardware.IMU;
 
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 public class sensorLibrary {
 
     public mainLibrary mainLibrary;
+
+    public sensorLibrary(mainLibrary mainLibrary) {
+
+        this.mainLibrary = mainLibrary;
+
+    }
 
     public boolean isColor(String color) {
         int red = mainLibrary.colorSensor.red();
@@ -55,7 +63,7 @@ public class sensorLibrary {
         return color;
     }
 
-    public boolean touchSensorState() {
+   public boolean touchSensorState() {
         boolean state;
         return state = mainLibrary.touchSensor.isPressed();
     }

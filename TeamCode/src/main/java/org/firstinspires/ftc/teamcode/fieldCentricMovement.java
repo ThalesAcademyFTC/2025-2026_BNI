@@ -19,6 +19,7 @@ public class fieldCentricMovement {
         main.motorFR.setPower(y - x + rx);
         main.motorBR.setPower(y - x - rx);
         main.motorBL.setPower(y + x - rx);
+
     }
 
 }

@@ -3,8 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
+import android.system.Os;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp
 public class Teleop extends OpMode {
@@ -15,8 +19,13 @@ public class Teleop extends OpMode {
     public sensorLibrary sensorLibrary;
 
     public void init() {
+
+        mainLibrary = new mainLibrary(hardwareMap, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
+
+        sensorLibrary = new sensorLibrary(mainLibrary);
+
         telemetry.addData("Touch sensor state", mainLibrary.touchSensor.isPressed());
-        telemetry.addData("Distance from distance sensor", sensorLibrary.distanceFromSensor());
+        telemetry.addData("Distance from distance sensor", mainLibrary.distanceSensor.getDistance(DistanceUnit.CM));
         telemetry.addData("Red value", mainLibrary.colorSensor.red());
         telemetry.addData("Blue value", mainLibrary.colorSensor.blue());
         telemetry.addData("Green value", mainLibrary.colorSensor.green());

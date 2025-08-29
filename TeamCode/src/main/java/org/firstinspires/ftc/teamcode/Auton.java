@@ -12,7 +12,10 @@ public class Auton extends LinearOpMode {
 
     double rest = 100;
 
+
+
     public void runOpMode() {
+        waitForStart();
 
     }
 

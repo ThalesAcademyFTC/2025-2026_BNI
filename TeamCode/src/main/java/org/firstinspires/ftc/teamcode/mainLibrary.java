@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 //import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -23,6 +24,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -60,7 +62,7 @@ public class mainLibrary {
 
     public RevColorSensorV3 colorSensor;
 
-    public RevTouchSensor touchSensor;
+    public TouchSensor touchSensor;
 
     public Rev2mDistanceSensor distanceSensor;
 
@@ -71,6 +73,8 @@ public class mainLibrary {
     public Rev9AxisImu ohMyCog;
 
     double tickPerInch = 50;
+
+    public boolean leftToggleToggle = true;
 
 
 
@@ -107,12 +111,7 @@ public class mainLibrary {
         setUpHardware();
     }
 
-    public void explode(double time) {
 
-        //those who know
-
-        System.exit(0);
-    }
 
     public void driverCentricMovement(double x, double y, double turn) {
 
@@ -156,7 +155,7 @@ public class mainLibrary {
 
         //sensors defined here
 
-        touchSensor = (RevTouchSensor) hwMap.touchSensor.get("TouchSensor");
+        touchSensor =  hwMap.touchSensor.get("TouchSensor");
         distanceSensor = (Rev2mDistanceSensor) hwMap.opticalDistanceSensor.get("DistanceSensor");
         colorSensor = (RevColorSensorV3) hwMap.colorSensor.get("ColorSensor");
 
