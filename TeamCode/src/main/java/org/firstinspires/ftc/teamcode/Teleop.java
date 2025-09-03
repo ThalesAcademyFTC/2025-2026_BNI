@@ -18,6 +18,8 @@ public class Teleop extends OpMode {
 
     public sensorLibrary sensorLibrary;
 
+    double rbtSpd = .5;
+
     public void init() {
 
         mainLibrary = new mainLibrary(hardwareMap, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
@@ -34,7 +36,11 @@ public class Teleop extends OpMode {
     }
     public void loop() {
 
-        driverCentricMovement.movement(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+        double y = (-gamepad1.left_stick_y * rbtSpd);
+        double x = (gamepad1.left_stick_x * rbtSpd);
+        double turn = (gamepad1.right_stick_x * rbtSpd);
+
+        driverCentricMovement.driverMovement(x, y, turn);
 
         telemetry.update();
     }

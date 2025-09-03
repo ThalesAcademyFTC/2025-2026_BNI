@@ -9,7 +9,7 @@ public class driverCentricMovement {
 
     public mainLibrary mainLibrary;
 
-    public void movement(double x, double y, double turn) {
+    public void driverMovement(double x, double y, double turn) {
 
         //math yippeee
 

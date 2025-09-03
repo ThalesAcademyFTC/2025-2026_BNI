@@ -113,28 +113,7 @@ public class mainLibrary {
 
 
 
-    public void driverCentricMovement(double x, double y, double turn) {
 
-        //math yippeee
-
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(turn), 1);
-
-        double motorFLPower = (y + x + turn) / denominator;
-        double motorFRPower = (y - x + turn) / denominator;
-        double motorBLPower = (y - x - turn) / denominator;
-        double motorBRPower = (y + x - turn) / denominator;
-
-            /*
-            divides the value of a stick's x and y value as well as another stick's turn value (can be x or y)
-             by the maximum value to limit power
-            */
-
-        motorFL.setPower(motorFLPower);
-        motorFR.setPower(motorFRPower);
-        motorBL.setPower(motorBLPower);
-        motorBR.setPower(motorBRPower);
-
-    }
 
     public void setServo1(double position) {
 
@@ -156,9 +135,8 @@ public class mainLibrary {
         //sensors defined here
 
         touchSensor =  hwMap.touchSensor.get("TouchSensor");
-        distanceSensor = (Rev2mDistanceSensor) hwMap.opticalDistanceSensor.get("DistanceSensor");
-        colorSensor = (RevColorSensorV3) hwMap.colorSensor.get("ColorSensor");
-
+        distanceSensor = hwMap.get(Rev2mDistanceSensor.class, "DistanceSensor");
+        colorSensor = hwMap.get(RevColorSensorV3.class, "ColorSensor");
         //all motors defined here
 
         allMotors =  new DcMotorEx[] {motorBL, motorBR, motorFL, motorFR};

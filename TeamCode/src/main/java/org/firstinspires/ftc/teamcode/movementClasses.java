@@ -33,6 +33,8 @@ public class movementClasses {
 
     public mainLibrary main;
 
+    public driverCentricMovement driverCentricMovement;
+
     public void moveForwardInches(double inches, double speed) {
 
         int TickTarget = (int) Math.round(inches* main.tickPerInch);
@@ -50,7 +52,7 @@ public class movementClasses {
 
         }
 
-        main.driverCentricMovement(speed , 0 , 0);
+        driverCentricMovement.driverMovement(speed , 0 , 0);
 
         for (DcMotor x : mainLibrary.allMotors) {
 
