@@ -24,6 +24,8 @@ public class Teleop extends OpMode {
 
         mainLibrary = new mainLibrary(hardwareMap, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
 
+        driverCentricMovement = new driverCentricMovement(mainLibrary);
+
         sensorLibrary = new sensorLibrary(mainLibrary);
 
         telemetry.addData("Touch sensor state", mainLibrary.touchSensor.isPressed());
@@ -36,9 +38,9 @@ public class Teleop extends OpMode {
     }
     public void loop() {
 
-        double y = (-gamepad1.left_stick_y * rbtSpd);
-        double x = (gamepad1.left_stick_x * rbtSpd);
-        double turn = (gamepad1.right_stick_x * rbtSpd);
+        double y = (-gamepad1.left_stick_y);
+        double x = (gamepad1.left_stick_x);
+        double turn = (gamepad1.right_stick_x);
 
         driverCentricMovement.driverMovement(x, y, turn);
 
