@@ -162,8 +162,8 @@ public class mainLibrary {
         //sensors defined here
 
         touchSensor =  hwMap.touchSensor.get("TouchSensor");
-        distanceSensor = (Rev2mDistanceSensor) hwMap.opticalDistanceSensor.get("DistanceSensor");
-        colorSensor = (RevColorSensorV3) hwMap.colorSensor.get("ColorSensor");
+        distanceSensor = hwMap.get(Rev2mDistanceSensor.class,"DistanceSensor");
+        colorSensor = hwMap.get(RevColorSensorV3.class,"ColorSensor");
 
         IMU imu = hwMap.get(IMU.class, "imu");
 

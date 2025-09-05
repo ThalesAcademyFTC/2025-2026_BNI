@@ -12,7 +12,11 @@ public class fieldCentricMovement {
 
     //we love billy dignam
 
-    mainLibrary mainLibrary;
+    mainLibrary main;
+
+    public fieldCentricMovement (mainLibrary mainLib){
+        main = mainLib;
+    }
 
     public void fieldMovement(double x, double y, double turn) {
 
@@ -22,7 +26,7 @@ public class fieldCentricMovement {
         }
         */
 
-        double botHeading = mainLibrary.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        double botHeading = main.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
         // Rotate the movement direction counter to the bot's rotation
         double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
@@ -41,10 +45,10 @@ public class fieldCentricMovement {
              by the maximum value to limit power
             */
 
-        mainLibrary.motorFL.setPower(motorFLPower);
-        mainLibrary.motorFR.setPower(motorFRPower);
-        mainLibrary.motorBL.setPower(motorBLPower);
-        mainLibrary.motorBR.setPower(motorBRPower);
+        main.motorFL.setPower(motorFLPower);
+        main.motorFR.setPower(motorFRPower);
+        main.motorBL.setPower(motorBLPower);
+        main.motorBR.setPower(motorBRPower);
 
     }
 }

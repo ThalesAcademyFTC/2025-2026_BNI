@@ -14,6 +14,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class Teleop extends OpMode {
     public driverCentricMovement driverCentricMovement;
 
+    public fieldCentricMovement fieldCentricMovement;
+
     public mainLibrary mainLibrary;
 
     public sensorLibrary sensorLibrary;
@@ -44,7 +46,9 @@ public class Teleop extends OpMode {
         double x = (gamepad1.left_stick_x);
         double turn = (gamepad1.right_stick_x);
 
-        driverCentricMovement.driverMovement(x, y, turn);
+        //driverCentricMovement.driverMovement(x, y, turn);
+        fieldCentricMovement.fieldMovement(x, y, turn);
+
 
         telemetry.update();
 
