@@ -6,6 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEasy;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
@@ -16,12 +17,16 @@ public class sensorLibrary {
 
     public mainLibrary mainLibrary;
 
+    public ConceptAprilTagEasy conceptAprilTagEasy;
+
     public sensorLibrary(mainLibrary mainLibrary) {
 
         this.mainLibrary = mainLibrary;
 
     }
+    public void motifPattern() {
 
+    }
     public boolean isColor(String color) {
         NormalizedRGBA rgba = mainLibrary.colorSensor.getNormalizedColors();
         //float red = rgba.red;
