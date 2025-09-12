@@ -45,7 +45,9 @@ public class mainLibrary {
 
     public enum Drivetrain {
 
-        MECHANUM
+        MECHANUM,
+
+        TEST
 
     }
 
@@ -115,69 +117,52 @@ public class mainLibrary {
     }
 
 
-
-/*    public void driverCentricMovement(double x, double y, double turn) {
-
-        //math yippeee
-
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(turn), 1);
-
-        double motorFLPower = (y + x + turn) / denominator;
-        double motorFRPower = (y - x + turn) / denominator;
-        double motorBLPower = (y - x - turn) / denominator;
-        double motorBRPower = (y + x - turn) / denominator;
-
-            /*
-            divides the value of a stick's x and y value as well as another stick's turn value (can be x or y)
-             by the maximum value to limit power
-            *
-
-        motorFL.setPower(motorFLPower);
-        motorFR.setPower(motorFRPower);
-        motorBL.setPower(motorBLPower);
-        motorBR.setPower(motorBRPower);
-
-    }
-    */
-
     public void setServo1(double position) {
 
         servo1.setPosition(position);
 
     }
     public void setUpHardware() {
-        //motors gotted in hardware map
+        switch (drive) {
+            case MECHANUM:
+                //motors gotted in hardware map
 
-        motorFL = (DcMotorEx) hwMap.dcMotor.get("MotorFL");
-        motorFR = (DcMotorEx) hwMap.dcMotor.get("MotorFR");
-        motorBL = (DcMotorEx) hwMap.dcMotor.get("MotorBL");
-        motorBR = (DcMotorEx) hwMap.dcMotor.get("MotorBR");
-
-
-
-        //servos gotted in hardware map
-
-        servo1 = hwMap.servo.get("Servo1");
-
-        //sensors defined here
-
-        touchSensor =  hwMap.touchSensor.get("TouchSensor");
-        distanceSensor = hwMap.get(Rev2mDistanceSensor.class,"DistanceSensor");
-        colorSensor = hwMap.get(RevColorSensorV3.class,"ColorSensor");
-
-        IMU imu = hwMap.get(IMU.class, "imu");
-
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
-        // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
-        imu.initialize(parameters);
-
-        //all motors defined here
-
-        allMotors =  new DcMotorEx[] {motorBL, motorBR, motorFL, motorFR};
+                motorFL = (DcMotorEx) hwMap.dcMotor.get("MotorFL");
+                motorFR = (DcMotorEx) hwMap.dcMotor.get("MotorFR");
+                motorBL = (DcMotorEx) hwMap.dcMotor.get("MotorBL");
+                motorBR = (DcMotorEx) hwMap.dcMotor.get("MotorBR");
 
 
+
+                //servos gotted in hardware map
+
+                servo1 = hwMap.servo.get("Servo1");
+
+                //sensors defined here
+
+                touchSensor =  hwMap.touchSensor.get("TouchSensor");
+                distanceSensor = hwMap.get(Rev2mDistanceSensor.class,"DistanceSensor");
+                colorSensor = hwMap.get(RevColorSensorV3.class,"ColorSensor");
+
+                IMU imu = hwMap.get(IMU.class, "imu");
+
+                IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                        RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
+                // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
+                imu.initialize(parameters);
+
+                //all motors defined here
+
+                allMotors =  new DcMotorEx[] {motorBL, motorBR, motorFL, motorFR};
+
+                break;
+        }
+        switch (drive) {
+            case TEST:
+                //pass
+                break;
+        }
 
     }
 
