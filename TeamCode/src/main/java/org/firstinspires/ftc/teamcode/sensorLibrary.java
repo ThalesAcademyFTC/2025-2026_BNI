@@ -8,6 +8,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEasy;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
 
 public class sensorLibrary {
@@ -25,6 +28,8 @@ public class sensorLibrary {
 
     }
     public boolean isColor(String color) {
+        NormalizedRGBA rgba = mainLibrary.colorSensor.getNormalizedColors();
+        //float red = rgba.red;
         int red = mainLibrary.colorSensor.red();
         int blue = mainLibrary.colorSensor.blue();
         int green = mainLibrary.colorSensor.green();
@@ -74,6 +79,21 @@ public class sensorLibrary {
         }
         return color;
     }
+
+    /*public colorValues() {
+        //NormalizedRGBA rgba = mainLibrary.colorSensor.getNormalizedColors();
+        //float red = rgba.red;
+
+        int redValue = mainLibrary.colorSensor.red();
+        int blueValue = mainLibrary.colorSensor.blue();
+        int greenValue = mainLibrary.colorSensor.green();
+        int alphaValue = mainLibrary.colorSensor.alpha();
+
+        //[] redValue, blueValue, greenValue, alphaValue;
+
+        return */
+
+
 
    public boolean touchSensorState() {
         boolean state;
