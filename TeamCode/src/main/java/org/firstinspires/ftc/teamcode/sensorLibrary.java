@@ -31,6 +31,8 @@ public class sensorLibrary {
         int alpha = mainLibrary.colorSensor.alpha();
 
         switch (color.toLowerCase()) {
+            case "unknown":
+                return (red < 75) && (blue < 75) && (green < 75);
             case "red":
                 return red > green && red > blue;
             case "blue":
@@ -38,13 +40,18 @@ public class sensorLibrary {
             case "green":
                 return green > blue && green > red;
             case "white":
-                return alpha >= 1000;
+                return alpha >= 75;
             default:
                 return false;
         }
     }
     public String detectColor() {
         String color = "Cannot detect";
+        if (isColor("unknown")) {
+
+            return color = "unknown";
+
+        }
         if (isColor("red")) {
 
             return color = "red";
