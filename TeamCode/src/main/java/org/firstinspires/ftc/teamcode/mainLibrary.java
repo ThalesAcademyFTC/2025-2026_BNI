@@ -61,7 +61,7 @@ public class mainLibrary {
 
     public static DcMotorEx[] allMotors;
 
-    public Servo servo1;
+    public Servo rgbIndicator;
 
     public RevColorSensorV3 colorSensor;
 
@@ -107,21 +107,6 @@ public class mainLibrary {
         setUpHardware();
     }
 
-    public mainLibrary(HardwareMap hardwareMap, Drivetrain drive) {
-
-        this.hwMap = hardwareMap;
-
-        this.drive = drive;
-
-        setUpHardware();
-    }
-
-
-    public void setServo1(double position) {
-
-        servo1.setPosition(position);
-
-    }
     public void setUpHardware() {
         switch (drive) {
             case MECHANUM:
@@ -136,7 +121,7 @@ public class mainLibrary {
 
                 //servos gotted in hardware map
 
-                servo1 = hwMap.servo.get("Servo1");
+                rgbIndicator = hwMap.servo.get("rgbIndicator");
 
                 //sensors defined here
 

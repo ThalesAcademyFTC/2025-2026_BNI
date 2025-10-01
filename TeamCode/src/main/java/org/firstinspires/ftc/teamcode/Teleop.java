@@ -28,7 +28,7 @@ public class Teleop extends OpMode {
 
     public void init() {
 
-        mainLibrary = new mainLibrary(hardwareMap, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
+        mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
 
         driverCentricMovement = new driverCentricMovement(mainLibrary);
 
@@ -52,7 +52,7 @@ public class Teleop extends OpMode {
         telemetry.addData("Blue value", mainLibrary.colorSensor.blue());
         telemetry.addData("Green value", mainLibrary.colorSensor.green());
         telemetry.addData("Alpha value", mainLibrary.colorSensor.alpha());
-        telemetry.addData("Color", sensorLibrary.detectColor());
+        telemetry.addData("Color", sensorLibrary.isColorRGB());
     }
     public void loop() {
 
@@ -66,13 +66,13 @@ public class Teleop extends OpMode {
 
         telemetry.update();
 
-        if (gamepad2.right_trigger > 0.5) {
+     /*   if (gamepad2.right_trigger > 0.5) {
             mainLibrary.servo1.setPosition(startPosition += 0.05);
         }
         if (gamepad2.left_trigger > 0.5) {
             mainLibrary.servo1.setPosition(startPosition -= 0.05);
-        }
-        if (gamepad2.a) {
+        } */
+    /*    if (gamepad2.a) {
             if (sensorLibrary.isColor("red")) {
                 telemetry.addLine("Red");
 
@@ -89,6 +89,6 @@ public class Teleop extends OpMode {
                 telemetry.addLine("Not Found");
 
             }
-        }
+        } */
     }
 }
