@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gam
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+import static org.firstinspires.ftc.teamcode.cameraLibrary.detectedId;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -31,6 +32,8 @@ public class TestTeleop extends OpMode {
 
     public cameraLibrary cameraLibrary;
 
+    public detectedId detectedId;
+
     public ConceptAprilTagEasy conceptAprilTagEasy;
 
     public AprilTagProcessor aprilTagProcessor;
@@ -42,6 +45,10 @@ public class TestTeleop extends OpMode {
     double ledValue = 0.277;
 
     double constant = 1;
+
+    public static final String MOTIF = "MOTIF";
+
+    detectedId motif;
 
     public void init() {
 
@@ -57,11 +64,15 @@ public class TestTeleop extends OpMode {
 
         cameraLibrary.initializeAprilTag();
 
+        motif = (detectedId) blackboard.get("MOTIF");
+
+
+
     }
     public void loop() {
 
-        cameraLibrary.detectID();
 
+/*
         if (sensorLibrary.isColorHSV() == org.firstinspires.ftc.teamcode.sensorLibrary.colorValues.GREEN) {
             ledValue = .5;
         } else if (sensorLibrary.isColorHSV() == org.firstinspires.ftc.teamcode.sensorLibrary.colorValues.PURPLE) {
@@ -69,8 +80,17 @@ public class TestTeleop extends OpMode {
         } else {
             ledValue = 0;
         }
-
-        mainLibrary.rgbIndicator.setPosition(ledValue);
+*/
+        if (motif == detectedId.GREEN_PURPLE_PURPLE) {
+            mainLibrary.rgbIndicator.setPosition(.280); //red
+        } else if (motif == detectedId.PURPLE_GREEN_PURPLE) {
+            mainLibrary.rgbIndicator.setPosition(.333); //orange
+        } else if (motif == detectedId.PURPLE_PURPLE_GREEN) {
+            mainLibrary.rgbIndicator.setPosition(.388); //yellow
+        } else {
+            telemetry.addData("April ID", motif);
+        }
+        //mainLibrary.rgbIndicator.setPosition(ledValue);
         cameraLibrary.cameraTelemetry();
         //telemetry.addData("Touch sensor state", mainLibrary.touchSensor.isPressed());
         //telemetry.addData("Distance from distance sensor", mainLibrary.distanceSensor.getDistance(DistanceUnit.CM));

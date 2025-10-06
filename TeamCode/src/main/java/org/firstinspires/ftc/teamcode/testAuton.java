@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEasy;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+import org.firstinspires.ftc.teamcode.cameraLibrary.detectedId;
+
 @Autonomous
 public class testAuton extends LinearOpMode {
 
@@ -23,6 +25,8 @@ public class testAuton extends LinearOpMode {
 
     public AprilTagProcessor aprilTagProcessor;
 
+    public detectedId motif = detectedId.UNKNOWN;
+
 
     public void runOpMode() {
 
@@ -38,20 +42,21 @@ public class testAuton extends LinearOpMode {
 
         cameraLibrary.initializeAprilTag();
 
-        if (opModeIsActive()) {
-            while (opModeIsActive()) {
+        waitForStart();
 
-                if (cameraLibrary.detectID() == org.firstinspires.ftc.teamcode.cameraLibrary.detectedId.GREEN_PURPLE_PURPLE) {
-                    mainLibrary.rgbIndicator.setPosition(.277); //red
+        if (opModeIsActive()) {
+            while (opModeIsActive() && motif == detectedId.UNKNOWN) {
+
+                motif = cameraLibrary.detectID();
+
+                if (motif == detectedId.GREEN_PURPLE_PURPLE) {
+                    mainLibrary.rgbIndicator.setPosition(.280); //red
                     telemetry.addLine("Works");
-                } else if (cameraLibrary.detectID() == org.firstinspires.ftc.teamcode.cameraLibrary.detectedId.PURPLE_GREEN_PURPLE) {
+                } else if (motif == detectedId.PURPLE_GREEN_PURPLE) {
                     mainLibrary.rgbIndicator.setPosition(.333); //orange
                     telemetry.addLine("Works");
-                } else if (cameraLibrary.detectID() == org.firstinspires.ftc.teamcode.cameraLibrary.detectedId.PURPLE_PURPLE_GREEN) {
+                } else if (motif == detectedId.PURPLE_PURPLE_GREEN) {
                     mainLibrary.rgbIndicator.setPosition(.388); //yellow
-                    telemetry.addLine("Works");
-                } else if (cameraLibrary.detectID() == org.firstinspires.ftc.teamcode.cameraLibrary.detectedId.UNKNOWN) {
-                    mainLibrary.rgbIndicator.setPosition(.444); //sage green
                     telemetry.addLine("Works");
                 } else {
                     mainLibrary.rgbIndicator.setPosition(0);
@@ -62,6 +67,8 @@ public class testAuton extends LinearOpMode {
 
             }
         }
+
+        blackboard.put("MOTIF", motif);
 
 
 
