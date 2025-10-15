@@ -15,7 +15,11 @@ import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEas
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -62,9 +66,14 @@ public class cameraLibrary {
 
     VisionPortal.Builder builder = new VisionPortal.Builder();
 
+    private Position cameraPosition = new Position(DistanceUnit.INCH,
+            5, 2, 3.75, 0);
+    private YawPitchRollAngles cameraOrientation = new YawPitchRollAngles(AngleUnit.DEGREES,
+            0, -40, 0, 0);
+
     public void initializeAprilTag() {
 
-        aprilTag = new AprilTagProcessor.Builder().build();
+        aprilTag = new AprilTagProcessor.Builder().setCameraPose(cameraPosition, cameraOrientation).build();
 
         if (useWebcam) {
             builder.setCamera(hwMap.get(WebcamName.class, "Logitech Webcam"));
@@ -94,6 +103,63 @@ public class cameraLibrary {
         }
         return idDetected;
     }
+
+
+    //may detect two tags at once and only return one. please fix later
+    public Pose3D tagReferencePosition() {
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        Pose3D tagOrientation = null;
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                // Only use tags that don't have Obelisk in them
+                if (!detection.metadata.name.contains("Obelisk")) {
+                    tagOrientation = detection.robotPose;
+                    telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
+                            detection.robotPose.getPosition().x,
+                            detection.robotPose.getPosition().y,
+                            detection.robotPose.getPosition().z));
+                    telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)",
+                            detection.robotPose.getOrientation().getPitch(AngleUnit.DEGREES),
+                            detection.robotPose.getOrientation().getRoll(AngleUnit.DEGREES),
+                            detection.robotPose.getOrientation().getYaw(AngleUnit.DEGREES)));
+                }
+            }
+            else {
+                telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+                telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+            }
+        }
+        return tagOrientation;
+    }
+
+    public Pose3D tagReferencePositionFromGoal() {
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        Pose3D tagOrientation = null;
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                // Only use tags that don't have Obelisk in them
+                if (!detection.metadata.name.contains("Obelisk")) {
+                    tagOrientation = detection.robotPose;
+                    telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
+                            detection.ftcPose.x,
+                            detection.ftcPose.y,
+                            detection.ftcPose.z));
+                    telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)",
+                            detection.ftcPose.pitch,
+                            detection.ftcPose.roll,
+                            detection.ftcPose.yaw));
+                }
+            }
+            else {
+                telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+                telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+            }
+        }
+        return tagOrientation;
+    }
+
     public void cameraTelemetry() {
         List <AprilTagDetection> currentDetections = aprilTag.getDetections();
         mainLibrary.telemetry.addData("# AprilTags Detected", currentDetections.size());

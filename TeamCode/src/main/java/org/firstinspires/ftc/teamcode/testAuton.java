@@ -70,6 +70,10 @@ public class testAuton extends LinearOpMode {
 
         blackboard.put("MOTIF", motif);
 
+        while (opModeIsActive()) {
+            continue;
+        }
+
 
 
     }

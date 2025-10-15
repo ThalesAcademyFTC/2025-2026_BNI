@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEasy;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -48,6 +49,8 @@ public class TestTeleop extends OpMode {
 
     public static final String MOTIF = "MOTIF";
 
+    Pose3D robotPosition = null;
+
     detectedId motif;
 
     public void init() {
@@ -67,18 +70,29 @@ public class TestTeleop extends OpMode {
         motif = (detectedId) blackboard.get("MOTIF");
 
 
+        telemetry.addData("Touch sensor state", mainLibrary.touchSensor.isPressed());
+        telemetry.addData("Distance from distance sensor", mainLibrary.distanceSensor.getDistance(DistanceUnit.CM));
+        telemetry.addData("Red value", mainLibrary.colorSensor.red());
+        telemetry.addData("Blue value", mainLibrary.colorSensor.blue());
+        telemetry.addData("Green value", mainLibrary.colorSensor.green());
+        telemetry.addData("Alpha value", mainLibrary.colorSensor.alpha());
+        telemetry.addData("ColorRGB", sensorLibrary.isColorRGB());
+        telemetry.addData("ColorHSV", sensorLibrary.isColorHSV());
+        telemetry.addData("Color sensor distance in cm", mainLibrary.colorSensor.getDistance(DistanceUnit.CM));
+        telemetry.addData("Is PurpleRGB?", sensorLibrary.IsPurple());
+        telemetry.addData("ServoPos value for rgb indicator", ledValue);
 
     }
+
     public void loop() {
 
 
 /*
         if (sensorLibrary.isColorHSV() == org.firstinspires.ftc.teamcode.sensorLibrary.colorValues.GREEN) {
             ledValue = .5;
-        } else if (sensorLibrary.isColorHSV() == org.firstinspires.ftc.teamcode.sensorLibrary.colorValues.PURPLE) {
+        }
+        if (sensorLibrary.isColorHSV() == org.firstinspires.ftc.teamcode.sensorLibrary.colorValues.PURPLE) {
             ledValue = .722;
-        } else {
-            ledValue = 0;
         }
 */
         if (motif == detectedId.GREEN_PURPLE_PURPLE) {
@@ -92,19 +106,12 @@ public class TestTeleop extends OpMode {
         }
         //mainLibrary.rgbIndicator.setPosition(ledValue);
         cameraLibrary.cameraTelemetry();
-        //telemetry.addData("Touch sensor state", mainLibrary.touchSensor.isPressed());
-        //telemetry.addData("Distance from distance sensor", mainLibrary.distanceSensor.getDistance(DistanceUnit.CM));
-        //telemetry.addData("Red value", mainLibrary.colorSensor.red());
-        //telemetry.addData("Blue value", mainLibrary.colorSensor.blue());
-        //telemetry.addData("Green value", mainLibrary.colorSensor.green());
-        //telemetry.addData("Alpha value", mainLibrary.colorSensor.alpha());
-        // telemetry.addData("ColorRGB", sensorLibrary.isColorRGB());
-        //telemetry.addData("ColorHSV", sensorLibrary.isColorHSV());
-        //telemetry.addData("Color sensor distance in cm", mainLibrary.colorSensor.getDistance(DistanceUnit.CM));
-        // telemetry.addData("Is PurpleRGB?", sensorLibrary.IsPurple());
-        //telemetry.addData("ServoPos value for rgb indicator", ledValue);
+        robotPosition = cameraLibrary.tagReferencePosition();
+
+
+
+
         telemetry.update();
 
     }
-
 }
