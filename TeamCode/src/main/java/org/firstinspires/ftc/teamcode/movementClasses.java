@@ -31,28 +31,70 @@ import java.util.List;
 
 public class movementClasses {
 
-    public mainLibrary main;
+    public mainLibrary mainLibrary;
+
+    public double tickPerInch = 50;
 
     public driverCentricMovement driverCentricMovement;
 
+    public movementClasses(mainLibrary mainLibrary, driverCentricMovement driverCentricMovement) {
+
+        this.mainLibrary = mainLibrary;
+
+        this.driverCentricMovement = driverCentricMovement;
+
+    }
+
     public void moveForwardInches(double inches, double speed) {
 
-        int TickTarget = (int) Math.round(inches* main.tickPerInch);
+        int TickTarget = (int) Math.round(inches * tickPerInch);
 
-        main.resetDriveEncoders();
+        mainLibrary.resetDriveEncoders();
 
-        main.motorFL.setTargetPosition(TickTarget);
-        main.motorFR.setTargetPosition(TickTarget);
-        main.motorBL.setTargetPosition(TickTarget);
-        main.motorBR.setTargetPosition(TickTarget);
+        mainLibrary.motorFL.setTargetPosition(TickTarget);
+        mainLibrary.motorFR.setTargetPosition(TickTarget);
+        mainLibrary.motorBL.setTargetPosition(TickTarget);
+        mainLibrary.motorBR.setTargetPosition(TickTarget);
 
-        for (DcMotor x : mainLibrary.allMotors ) {
+        driverCentricMovement.driverMovement(0, speed, 0);
+
+        for (DcMotorEx x : mainLibrary.allMotors) {
+
+            x.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        }
+
+
+        mainLibrary.waitForMotors();
+
+        mainLibrary.resetDriveEncoders();
+
+    }
+
+    public void moveBackwardInches(double inches, double speed) {
+
+        moveForwardInches(-inches, speed);
+
+    }
+
+    public void moveRightInches(double inches, double speed) {
+
+        int TickTarget = (int) Math.round(inches * tickPerInch);
+
+        mainLibrary.resetDriveEncoders();
+
+        mainLibrary.motorFL.setTargetPosition(TickTarget);
+        mainLibrary.motorFR.setTargetPosition(-TickTarget);
+        mainLibrary.motorBL.setTargetPosition(-TickTarget);
+        mainLibrary.motorBR.setTargetPosition(TickTarget);
+
+        for (DcMotor x : mainLibrary.allMotors) {
 
             x.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         }
 
-        driverCentricMovement.driverMovement(speed , 0 , 0);
+        driverCentricMovement.driverMovement(speed, 0, 0);
 
         for (DcMotor x : mainLibrary.allMotors) {
 
@@ -61,10 +103,15 @@ public class movementClasses {
         }
 
 
-       main.waitForMotors();
+        mainLibrary.waitForMotors();
 
-       main.resetDriveEncoders();
+        mainLibrary.resetDriveEncoders();
 
     }
 
+    public void moveLeftInches(double inches, double speed) {
+
+        moveRightInches(-inches, speed);
+
+    }
 }

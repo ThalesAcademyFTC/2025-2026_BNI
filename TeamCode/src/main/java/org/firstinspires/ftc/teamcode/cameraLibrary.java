@@ -111,23 +111,23 @@ public class cameraLibrary {
         Pose3D tagOrientation = null;
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
-                telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
                 // Only use tags that don't have Obelisk in them
                 if (!detection.metadata.name.contains("Obelisk")) {
                     tagOrientation = detection.robotPose;
-                    telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
+                    mainLibrary.telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
                             detection.robotPose.getPosition().x,
                             detection.robotPose.getPosition().y,
                             detection.robotPose.getPosition().z));
-                    telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)",
+                    mainLibrary.telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)",
                             detection.robotPose.getOrientation().getPitch(AngleUnit.DEGREES),
                             detection.robotPose.getOrientation().getRoll(AngleUnit.DEGREES),
                             detection.robotPose.getOrientation().getYaw(AngleUnit.DEGREES)));
                 }
             }
             else {
-                telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
-                telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+                mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+                mainLibrary.telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
             }
         }
         return tagOrientation;
@@ -138,26 +138,53 @@ public class cameraLibrary {
         Pose3D tagOrientation = null;
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
-                telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
                 // Only use tags that don't have Obelisk in them
                 if (!detection.metadata.name.contains("Obelisk")) {
                     tagOrientation = detection.robotPose;
-                    telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
+                    mainLibrary.telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
                             detection.ftcPose.x,
                             detection.ftcPose.y,
                             detection.ftcPose.z));
-                    telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)",
+                    mainLibrary.telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)",
                             detection.ftcPose.pitch,
                             detection.ftcPose.roll,
                             detection.ftcPose.yaw));
                 }
             }
             else {
-                telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
-                telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+                mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+                mainLibrary.telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
             }
         }
         return tagOrientation;
+    }
+
+    public Pose3D detectIfShotPossible() {
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        Pose3D tagOrientation = null;
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                tagOrientation = detection.robotPose;
+                mainLibrary.telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x,
+                        detection.ftcPose.y,
+                        detection.ftcPose.z));
+                mainLibrary.telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)",
+                        detection.ftcPose.pitch,
+                        detection.ftcPose.roll,
+                        detection.ftcPose.yaw));
+                if (detection.ftcPose.y > 50) {
+
+                    mainLibrary.rgbIndicator.setPosition(.278);
+
+                } else if (detection.ftcPose.y <= 70) {
+
+                    mainLibrary.rgbIndicator.setPosition(.5);
+
+                }
+
+            }
+        } return tagOrientation;
     }
 
     public void cameraTelemetry() {

@@ -26,6 +26,12 @@ public class Teleop extends OpMode {
 
     double startPosition = .5;
 
+    double rgbPos = .277;
+
+    double keep = 0;
+
+    double start = 0;
+
     public void init() {
 
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
@@ -62,6 +68,35 @@ public class Teleop extends OpMode {
 
         //driverCentricMovement.driverMovement(x, y, turn);
         fieldCentricMovement.fieldMovement(x, y, turn);
+
+        if (gamepad1.a) {
+
+            start = 1;
+
+        }
+        while (start == 1) {
+
+            rgbPos += 0.001;
+
+
+            if ((rgbPos == 1)) {
+
+                keep = 1;
+                rgbPos -= 0.001;
+
+            }
+            if (keep == 1) {
+
+                rgbPos -= 0.001;
+
+            }
+            if (rgbPos == .276) {
+
+                rgbPos += 0.01;
+                keep = 0;
+
+            }
+        }
 
 
         telemetry.update();

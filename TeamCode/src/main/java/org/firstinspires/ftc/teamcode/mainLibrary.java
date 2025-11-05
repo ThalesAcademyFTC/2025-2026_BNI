@@ -77,8 +77,6 @@ public class mainLibrary {
 
     public Rev9AxisImu ohMyCog;
 
-    double tickPerInch = 50;
-
     public boolean leftToggleToggle = true;
 
 
@@ -118,6 +116,8 @@ public class mainLibrary {
                 motorBR = (DcMotorEx) hwMap.dcMotor.get("MotorBR");
 
 
+                motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
+                motorFL.setDirection(DcMotorSimple.Direction.REVERSE);
 
                 //servos gotted in hardware map
 
@@ -153,7 +153,7 @@ public class mainLibrary {
 
       public void resetDriveEncoders() {
 
-        for (DcMotor x : allMotors) {
+        for (DcMotorEx x : allMotors) {
 
             x.setPower(0);
             x.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -175,5 +175,6 @@ public class mainLibrary {
             }
         }
     }
+
 }
 

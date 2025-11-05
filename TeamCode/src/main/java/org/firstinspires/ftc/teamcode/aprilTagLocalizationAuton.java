@@ -36,7 +36,7 @@ public class aprilTagLocalizationAuton extends LinearOpMode {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
 
-                cameraLibrary.tagReferencePositionFromGoal();
+                cameraLibrary.detectIfShotPossible();
                 telemetry.update();
 
             }

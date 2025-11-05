@@ -7,10 +7,12 @@ public class driverCentricMovement {
 
     //we love billy dignam
 
+
+    //test teleop movement
     public mainLibrary main;
 
     public driverCentricMovement (mainLibrary mainLib){
-        main = mainLib;
+        this.main = mainLib;
     }
     public void driverMovement(double x, double y, double turn) {
 
