@@ -20,7 +20,7 @@ public class autonBlueGoal extends LinearOpMode {
 
     public cameraLibrary cameraLibrary;
 
-    public movementClasses movementClasses;
+    public movement movement;
 
     public ConceptAprilTagEasy conceptAprilTagEasy;
 
@@ -41,7 +41,7 @@ public class autonBlueGoal extends LinearOpMode {
 
         cameraLibrary = new cameraLibrary(this, mainLibrary);
 
-        movementClasses = new movementClasses(mainLibrary, driverCentricMovement);
+        movement = new movement(mainLibrary, driverCentricMovement);
 
         cameraLibrary.initializeAprilTag();
 
@@ -49,9 +49,17 @@ public class autonBlueGoal extends LinearOpMode {
         //start of the auton
         waitForStart();
 
-        movementClasses.moveBackwardInches(50, .1);
+        movement.moveBackward(50, .1);
 
         cameraLibrary.detectIfShotPossible();
+
+        sleep(1000);
+
+        movement.turnRight(45, 0.5);
+
+        sleep(1000);
+
+        movement.moveBackward(24, 0.5);
 
         if (opModeIsActive()) {
 

@@ -66,37 +66,9 @@ public class Teleop extends OpMode {
         double x = (gamepad1.left_stick_x);
         double turn = (gamepad1.right_stick_x);
 
-        //driverCentricMovement.driverMovement(x, y, turn);
-        fieldCentricMovement.fieldMovement(x, y, turn);
+        driverCentricMovement.driverMovement(x, y, turn);
+        //fieldCentricMovement.fieldMovement(x, y, turn);
 
-        if (gamepad1.a) {
-
-            start = 1;
-
-        }
-        while (start == 1) {
-
-            rgbPos += 0.001;
-
-
-            if ((rgbPos == 1)) {
-
-                keep = 1;
-                rgbPos -= 0.001;
-
-            }
-            if (keep == 1) {
-
-                rgbPos -= 0.001;
-
-            }
-            if (rgbPos == .276) {
-
-                rgbPos += 0.01;
-                keep = 0;
-
-            }
-        }
 
 
         telemetry.update();
