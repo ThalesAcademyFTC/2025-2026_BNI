@@ -20,11 +20,11 @@ public class driverCentricMovement {
         //mess with this and experiment next meeting
        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(turn), 1);
 
-            double motorFLPower = (y + x - turn) / denominator;
+            double motorFLPower = (y + x + turn) / denominator;
             //ryan's idea ^
-            double motorFRPower = (-y - x - turn) / denominator;
+            double motorFRPower = (y - x + turn) / denominator;
             double motorBLPower = (y - x - turn) / denominator;
-            double motorBRPower = (-y + x - turn) / denominator;
+            double motorBRPower = (y + x - turn) / denominator;
 
             /*
             divides the value of a stick's x and y value as well as another stick's turn value (can be x or y)
