@@ -21,6 +21,22 @@ public class movement {
 
     }
 
+    public void cannonLaunch() {
+        mainLibrary.cannonMotor.setPower(1);
+    }
+
+    public void cannonStop() {
+        mainLibrary.cannonMotor.setPower(0);
+    }
+
+    public void primeLaunch() {
+        mainLibrary.THESERVO.setPosition(.5);
+    }
+
+    public void restTHESERVO() {
+        mainLibrary.THESERVO.setPosition(1);
+    }
+
     public void moveForward(double inches, double speed) {
 
         int TickTarget = (int) Math.round(inches * tickPerInch);

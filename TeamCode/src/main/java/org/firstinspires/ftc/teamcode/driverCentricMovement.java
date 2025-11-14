@@ -22,8 +22,8 @@ public class driverCentricMovement {
 
             double motorFLPower = (y + x + turn) / denominator;
             //ryan's idea ^
-            double motorFRPower = (y - x + turn) / denominator;
-            double motorBLPower = (y - x - turn) / denominator;
+            double motorBLPower = (y - x + turn) / denominator;
+            double motorFRPower = (y - x - turn) / denominator;
             double motorBRPower = (y + x - turn) / denominator;
 
             /*

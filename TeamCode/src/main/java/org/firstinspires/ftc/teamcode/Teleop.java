@@ -22,6 +22,8 @@ public class Teleop extends OpMode {
 
     public sensorLibrary sensorLibrary;
 
+    public movement movement;
+
     double rbtSpd = .5;
 
     double startPosition = .5;
@@ -40,25 +42,19 @@ public class Teleop extends OpMode {
 
         fieldCentricMovement = new fieldCentricMovement(mainLibrary);
 
-        mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
-        IMU imu = mainLibrary.hwMap.get(IMU.class, "imu");
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
-        // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
-        imu.initialize(parameters);
+        movement = new movement(mainLibrary, driverCentricMovement);
 
 
 
         sensorLibrary = new sensorLibrary(mainLibrary);
 
-        telemetry.addData("Touch sensor state", mainLibrary.touchSensor.isPressed());
-        telemetry.addData("Distance from distance sensor", mainLibrary.distanceSensor.getDistance(DistanceUnit.CM));
-        telemetry.addData("Red value", mainLibrary.colorSensor.red());
-        telemetry.addData("Blue value", mainLibrary.colorSensor.blue());
-        telemetry.addData("Green value", mainLibrary.colorSensor.green());
-        telemetry.addData("Alpha value", mainLibrary.colorSensor.alpha());
-        telemetry.addData("Color", sensorLibrary.isColorRGB());
+        //telemetry.addData("Touch sensor state", mainLibrary.touchSensor.isPressed());
+        //telemetry.addData("Distance from distance sensor", mainLibrary.distanceSensor.getDistance(DistanceUnit.CM));
+        //telemetry.addData("Red value", mainLibrary.colorSensor.red());
+        //telemetry.addData("Blue value", mainLibrary.colorSensor.blue());
+        //telemetry.addData("Green value", mainLibrary.colorSensor.green());
+        //telemetry.addData("Alpha value", mainLibrary.colorSensor.alpha());
+        //telemetry.addData("Color", sensorLibrary.isColorRGB());
     }
     public void loop() {
 
@@ -68,6 +64,28 @@ public class Teleop extends OpMode {
 
         driverCentricMovement.driverMovement(x, y, turn);
         //fieldCentricMovement.fieldMovement(x, y, turn);
+
+        if (gamepad2.right_trigger > 0.1) {
+
+            movement.cannonLaunch();
+
+        } else {
+
+            movement.cannonStop();
+
+        }
+
+        if (gamepad2.right_bumper) {
+
+            movement.primeLaunch();
+
+        }
+
+        if (gamepad2.left_bumper) {
+
+            movement.restTHESERVO();
+
+        }
 
 
 

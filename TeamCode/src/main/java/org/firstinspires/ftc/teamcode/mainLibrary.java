@@ -57,7 +57,9 @@ public class mainLibrary {
 
     //defines motors to all classes that call main/mainlibrary
 
-    public DcMotorEx motorFL, motorFR, motorBL, motorBR;
+    public DcMotorEx motorFL, motorFR, motorBL, motorBR, cannonMotor;
+
+    public Servo THESERVO;
 
     public static DcMotorEx[] allMotors;
 
@@ -110,24 +112,29 @@ public class mainLibrary {
             case MECHANUM:
                 //motors gotted in hardware map
 
-                motorFL = (DcMotorEx) hwMap.dcMotor.get("MotorFL");
-                motorFR = (DcMotorEx) hwMap.dcMotor.get("MotorFR");
-                motorBL = (DcMotorEx) hwMap.dcMotor.get("MotorBL");
-                motorBR = (DcMotorEx) hwMap.dcMotor.get("MotorBR");
+                motorFL = (DcMotorEx) hwMap.dcMotor.get("motorFL");
+                motorFR = (DcMotorEx) hwMap.dcMotor.get("motorFR");
+                motorBL = (DcMotorEx) hwMap.dcMotor.get("motorBL");
+                motorBR = (DcMotorEx) hwMap.dcMotor.get("motorBR");
+                cannonMotor = (DcMotorEx) hwMap.dcMotor.get("cannonMotor");
 
+                THESERVO = hwMap.servo.get("THESERVO");
 
-                motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
+                //If a motor direction needs to be flipped:
                 motorFL.setDirection(DcMotorSimple.Direction.REVERSE);
+                motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
+                //motorFR.setDirection(DcMotorSimple.Direction.REVERSE);
+                //motorBR.setDirection(DcMotorSimple.Direction.REVERSE);
 
                 //servos gotted in hardware map
 
-                rgbIndicator = hwMap.servo.get("rgbIndicator");
+                //rgbIndicator = hwMap.servo.get("rgbIndicator");
 
                 //sensors defined here
 
-                touchSensor =  hwMap.touchSensor.get("TouchSensor");
-                distanceSensor = hwMap.get(Rev2mDistanceSensor.class,"DistanceSensor");
-                colorSensor = hwMap.get(RevColorSensorV3.class,"ColorSensor");
+                //touchSensor =  hwMap.touchSensor.get("TouchSensor");
+                //distanceSensor = hwMap.get(Rev2mDistanceSensor.class,"DistanceSensor");
+                //colorSensor = hwMap.get(RevColorSensorV3.class,"ColorSensor");
 
                 IMU imu = hwMap.get(IMU.class, "imu");
 
@@ -151,7 +158,8 @@ public class mainLibrary {
 
     }
 
-      public void resetDriveEncoders() {
+
+    public void resetDriveEncoders() {
 
         for (DcMotorEx x : allMotors) {
 
