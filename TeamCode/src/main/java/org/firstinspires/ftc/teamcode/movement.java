@@ -30,11 +30,11 @@ public class movement {
     }
 
     public void primeLaunch() {
-        mainLibrary.THESERVO.setPosition(.5);
+        mainLibrary.THESERVO.setPosition(.45);
     }
 
     public void restTHESERVO() {
-        mainLibrary.THESERVO.setPosition(1);
+        mainLibrary.THESERVO.setPosition(0.95);
     }
 
     public void moveForward(double inches, double speed) {

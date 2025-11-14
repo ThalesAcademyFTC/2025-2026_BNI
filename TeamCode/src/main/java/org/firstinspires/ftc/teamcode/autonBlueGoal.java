@@ -51,9 +51,11 @@ public class autonBlueGoal extends LinearOpMode {
 
         movement.moveBackward(50, .1);
 
-        cameraLibrary.detectIfShotPossible();
+        //cameraLibrary.detectIfShotPossible();
 
-        sleep           (1000);
+        sleep(1000);
+
+        sleep(1000);
 
         movement.turnRight(45, 0.5);
 

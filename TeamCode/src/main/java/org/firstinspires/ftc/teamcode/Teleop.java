@@ -34,7 +34,15 @@ public class Teleop extends OpMode {
 
     double start = 0;
 
+    double curr_time;
+
+    double last_time;
+
     public void init() {
+
+
+
+
 
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
 
@@ -62,10 +70,11 @@ public class Teleop extends OpMode {
         double x = (gamepad1.left_stick_x);
         double turn = (gamepad1.right_stick_x);
 
+
         driverCentricMovement.driverMovement(x, y, turn);
         //fieldCentricMovement.fieldMovement(x, y, turn);
 
-        if (gamepad2.right_trigger > 0.1) {
+        if (gamepad2.left_trigger > 0.1) {
 
             movement.cannonLaunch();
 
@@ -87,33 +96,26 @@ public class Teleop extends OpMode {
 
         }
 
+        if (gamepad2.right_trigger > 0.5) {
+            movement.cannonLaunch();
+            if(last_time == 0.0) {
+                last_time = getRuntime();
+                }
+            curr_time = getRuntime();
+            if (curr_time > (last_time + 1.5)){
+                movement.primeLaunch();
+            }
+            if (curr_time > (last_time + 2)){
+                movement.restTHESERVO();
+                last_time = curr_time;
+            }
+        } else {
+            last_time = 0.0;
+            movement.cannonStop();
+            movement.primeLaunch();
+        }
 
 
         telemetry.update();
-
-     /*   if (gamepad2.right_trigger > 0.5) {
-            mainLibrary.servo1.setPosition(startPosition += 0.05);
-        }
-        if (gamepad2.left_trigger > 0.5) {
-            mainLibrary.servo1.setPosition(startPosition -= 0.05);
-        } */
-    /*    if (gamepad2.a) {
-            if (sensorLibrary.isColor("red")) {
-                telemetry.addLine("Red");
-
-            } else if (sensorLibrary.isColor("blue")) {
-                telemetry.addLine("Blue");
-
-            } else if (sensorLibrary.isColor("green")) {
-                telemetry.addLine("Green");
-
-            } else if (sensorLibrary.isColor("white")) {
-                telemetry.addLine("White");
-
-            } else {
-                telemetry.addLine("Not Found");
-
-            }
-        } */
     }
 }
