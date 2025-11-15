@@ -11,6 +11,10 @@ public class movement {
 
     public double tickPerDegree = 0;
 
+    double last_time;
+
+    double curr_time;
+
     public driverCentricMovement driverCentricMovement;
 
     public movement(mainLibrary mainLibrary, driverCentricMovement driverCentricMovement) {
@@ -21,6 +25,7 @@ public class movement {
 
     }
 
+    //this code should be moved to a separate class for actions, like launching in teleop or auton pls.
     public void cannonLaunch() {
         mainLibrary.cannonMotor.setPower(1);
     }
@@ -30,11 +35,15 @@ public class movement {
     }
 
     public void primeLaunch() {
-        mainLibrary.THESERVO.setPosition(.45);
+        mainLibrary.THESERVO.setPosition(0.5);
     }
 
     public void restTHESERVO() {
-        mainLibrary.THESERVO.setPosition(0.95);
+        mainLibrary.THESERVO.setPosition(0.7);
+    }
+
+    public void launchLittleBoy() {
+
     }
 
     public void moveForward(double inches, double speed) {

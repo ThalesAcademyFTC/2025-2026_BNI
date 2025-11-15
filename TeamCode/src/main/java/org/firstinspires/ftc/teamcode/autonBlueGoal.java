@@ -18,7 +18,7 @@ public class autonBlueGoal extends LinearOpMode {
 
     public sensorLibrary sensorLibrary;
 
-    public cameraLibrary cameraLibrary;
+   // public cameraLibrary cameraLibrary;
 
     public movement movement;
 
@@ -30,6 +30,10 @@ public class autonBlueGoal extends LinearOpMode {
 
     public String motifPattern;
 
+    double curr_time;
+
+    double last_time;
+
 
     public void runOpMode() {
 
@@ -39,29 +43,72 @@ public class autonBlueGoal extends LinearOpMode {
 
         sensorLibrary = new sensorLibrary(mainLibrary);
 
-        cameraLibrary = new cameraLibrary(this, mainLibrary);
+        //cameraLibrary = new cameraLibrary(this, mainLibrary);
 
         movement = new movement(mainLibrary, driverCentricMovement);
 
-        cameraLibrary.initializeAprilTag();
+       // cameraLibrary.initializeAprilTag();
 
 
         //start of the auton
         waitForStart();
 
-        movement.moveBackward(50, .1);
+        movement.moveBackward(50, .5);
 
         //cameraLibrary.detectIfShotPossible();
 
-        sleep(1000);
-
-        sleep(1000);
+        mainLibrary.waitForMotors();
 
         movement.turnRight(45, 0.5);
 
-        sleep(1000);
+        mainLibrary.waitForMotors();
 
-        movement.moveBackward(24, 0.5);
+        movement.moveForward(12, 0.5);
+        movement.moveRight(12, 0.5);
+
+        /*mainLibrary.cannonMotor.setPower(1);
+
+        if (getRuntime() >= last_time + 1.5) {
+            movement.primeLaunch();
+
+            sleep(100);
+
+            movement.restTHESERVO();
+
+            sleep(100);
+
+            mainLibrary.cannonMotor.setPower(1);
+
+            if (getRuntime() >= last_time + 5) {
+                movement.primeLaunch();
+
+                sleep(100);
+
+                movement.restTHESERVO();
+
+                sleep(100);
+
+                mainLibrary.cannonMotor.setPower(1);
+
+                if (getRuntime() >= last_time + 8.5) {
+                    movement.primeLaunch();
+
+                    sleep(100);
+
+                    movement.restTHESERVO();
+
+                    sleep(1000);
+
+                    movement.turnRight(45, 0.5);
+
+                    sleep(1000);
+
+                    movement.moveRight(12, 0.5);
+                }
+            }
+        } else {*/
+
+     /*   }
 
         if (opModeIsActive()) {
 
@@ -91,7 +138,7 @@ public class autonBlueGoal extends LinearOpMode {
 
         blackboard.put("MOTIF", motif);
 
-
+*/
 
 
 

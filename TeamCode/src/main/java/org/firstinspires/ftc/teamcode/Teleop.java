@@ -52,9 +52,12 @@ public class Teleop extends OpMode {
 
         movement = new movement(mainLibrary, driverCentricMovement);
 
-
+        //start pos 0.7
+        movement.restTHESERVO();
 
         sensorLibrary = new sensorLibrary(mainLibrary);
+
+        //telemetry.addData("Motif pattern", blackboard.get())
 
         //telemetry.addData("Touch sensor state", mainLibrary.touchSensor.isPressed());
         //telemetry.addData("Distance from distance sensor", mainLibrary.distanceSensor.getDistance(DistanceUnit.CM));
@@ -66,6 +69,7 @@ public class Teleop extends OpMode {
     }
     public void loop() {
 
+
         double y = (-gamepad1.left_stick_y);
         double x = (gamepad1.left_stick_x);
         double turn = (gamepad1.right_stick_x);
@@ -74,15 +78,7 @@ public class Teleop extends OpMode {
         driverCentricMovement.driverMovement(x, y, turn);
         //fieldCentricMovement.fieldMovement(x, y, turn);
 
-        if (gamepad2.left_trigger > 0.1) {
 
-            movement.cannonLaunch();
-
-        } else {
-
-            movement.cannonStop();
-
-        }
 
         if (gamepad2.right_bumper) {
 
@@ -95,24 +91,31 @@ public class Teleop extends OpMode {
             movement.restTHESERVO();
 
         }
+        if (gamepad2.left_trigger > 0.5) {
 
-        if (gamepad2.right_trigger > 0.5) {
             movement.cannonLaunch();
-            if(last_time == 0.0) {
+
+        } else if (gamepad2.right_trigger > 0.5) {
+            movement.cannonLaunch();
+
+            if (last_time == 0.0) {
                 last_time = getRuntime();
-                }
+            }
+
             curr_time = getRuntime();
-            if (curr_time > (last_time + 1.5)){
+            if (curr_time > (last_time + 2)) {
                 movement.primeLaunch();
             }
-            if (curr_time > (last_time + 2)){
+
+            if (curr_time > (last_time + 3)) {
                 movement.restTHESERVO();
                 last_time = curr_time;
             }
+
         } else {
             last_time = 0.0;
             movement.cannonStop();
-            movement.primeLaunch();
+            movement.restTHESERVO();
         }
 
 
