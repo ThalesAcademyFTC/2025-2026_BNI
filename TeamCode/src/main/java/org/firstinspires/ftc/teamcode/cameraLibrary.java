@@ -1,18 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.IMU;
 
-
-import android.graphics.Color;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEasy;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -24,12 +17,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
-import com.qualcomm.robotcore.hardware.NormalizedRGBA;
-
 import java.util.List;
-import java.util.Objects;
 
 public class cameraLibrary {
 
@@ -51,11 +39,15 @@ public class cameraLibrary {
 
     public enum detectedId {
 
+        BLUE_GOAL,
+
         GREEN_PURPLE_PURPLE,
 
         PURPLE_GREEN_PURPLE,
 
         PURPLE_PURPLE_GREEN,
+
+        RED_GOAL,
 
         UNKNOWN
 
@@ -97,6 +89,10 @@ public class cameraLibrary {
                 idDetected = detectedId.PURPLE_GREEN_PURPLE;
             } else if (detection.id == 23) {
                 idDetected = detectedId.PURPLE_PURPLE_GREEN;
+            } else if (detection.id == 20) {
+                idDetected = detectedId.BLUE_GOAL;
+            } else if (detection.id == 24) {
+                idDetected = detectedId.RED_GOAL;
             } else {
                 mainLibrary.telemetry.addData("Could not detect the motif pattern due to problem scanning april tag", detection.id);
             }
@@ -104,6 +100,19 @@ public class cameraLibrary {
         return idDetected;
     }
 
+    public double yawAccordingToAprilTag() {
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        double yawValue = 0;
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                if (!detection.metadata.name.contains("Obelisk")) {
+                    yawValue = detection.robotPose.getOrientation().getYaw();
+                }
+            }
+        } return yawValue;
+
+
+    }
 
     //may detect two tags at once and only return one. please fix later
     public Pose3D tagReferencePosition() {
@@ -175,11 +184,13 @@ public class cameraLibrary {
                         detection.ftcPose.yaw));
                 if (detection.ftcPose.y > 50) {
 
-                    mainLibrary.rgbIndicator.setPosition(.278);
+                    //mainLibrary.rgbIndicator.setPosition(.278);
+                    //no shoot
 
                 } else if (detection.ftcPose.y <= 70) {
 
-                    mainLibrary.rgbIndicator.setPosition(.5);
+                    //mainLibrary.rgbIndicator.setPosition(.5);
+                    //shoot
 
                 }
 

@@ -116,9 +116,9 @@ public class mainLibrary {
                 motorFR = (DcMotorEx) hwMap.dcMotor.get("motorFR");
                 motorBL = (DcMotorEx) hwMap.dcMotor.get("motorBL");
                 motorBR = (DcMotorEx) hwMap.dcMotor.get("motorBR");
-                cannonMotor = (DcMotorEx) hwMap.dcMotor.get("cannonMotor");
+                //cannonMotor = (DcMotorEx) hwMap.dcMotor.get("cannonMotor");
 
-                THESERVO = hwMap.servo.get("THESERVO");
+                //THESERVO = hwMap.servo.get("THESERVO");
 
                 //If a motor direction needs to be flipped:
                 motorFL.setDirection(DcMotorSimple.Direction.REVERSE);

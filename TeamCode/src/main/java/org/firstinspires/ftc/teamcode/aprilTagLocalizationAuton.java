@@ -21,6 +21,10 @@ public class aprilTagLocalizationAuton extends LinearOpMode {
 
     public AprilTagProcessor aprilTagProcessor;
 
+    public driverCentricMovement driverCentricMovement;
+
+    public movement movement;
+
     public detectedId motif = detectedId.UNKNOWN;
 
 
@@ -28,15 +32,28 @@ public class aprilTagLocalizationAuton extends LinearOpMode {
 
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
         sensorLibrary = new sensorLibrary(mainLibrary);
+        driverCentricMovement = new driverCentricMovement(mainLibrary);
         cameraLibrary = new cameraLibrary(this, mainLibrary);
+        movement = new movement(mainLibrary, driverCentricMovement);
         cameraLibrary.initializeAprilTag();
+
+        telemetry.addData("Yaw angle", cameraLibrary.yawAccordingToAprilTag());
 
         waitForStart();
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
 
-                cameraLibrary.detectIfShotPossible();
+                if (cameraLibrary.detectID() == detectedId.BLUE_GOAL) {
+
+                    movement.turnLeft(360, .2);
+
+                    //mainLibrary.waitForMotors();
+
+                    //cameraLibrary.detectIfShotPossible();
+
+                }
+
                 telemetry.update();
 
             }
