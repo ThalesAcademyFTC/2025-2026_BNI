@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.cameraLibrary.detectedId;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 @Autonomous
-public class autonBlueGoal extends LinearOpMode {
+public class autonRedGoal extends LinearOpMode {
 
     public driverCentricMovement driverCentricMovement;
 
@@ -29,11 +29,6 @@ public class autonBlueGoal extends LinearOpMode {
     public detectedId motif = detectedId.UNKNOWN;
 
     public String motifPattern;
-
-    double curr_time;
-
-    double last_time;
-
 
     public void runOpMode() {
 
@@ -63,7 +58,7 @@ public class autonBlueGoal extends LinearOpMode {
 
         sleep(1500);
 
-        movement.turnRight(45, 0.5);
+        movement.turnLeft(45, 0.5);
 
         sleep(1000);
 

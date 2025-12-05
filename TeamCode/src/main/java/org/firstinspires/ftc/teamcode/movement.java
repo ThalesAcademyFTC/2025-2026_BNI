@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class movement {
 
@@ -14,6 +17,8 @@ public class movement {
     double last_time;
 
     double curr_time;
+
+    ElapsedTime timer = new ElapsedTime();
 
     public driverCentricMovement driverCentricMovement;
 
@@ -43,7 +48,19 @@ public class movement {
     }
 
     public void launchLittleBoy() {
-
+        timer.reset();
+        for (int i = 0; i < 3;) {
+            cannonLaunch();
+            if (timer.milliseconds() > 2000) {
+                primeLaunch();
+            }
+            if (timer.milliseconds() > 3000) {
+                restTHESERVO();
+                timer.reset();
+                i++;
+            }
+        }
+        cannonStop();
     }
 
     public void moveForward(double inches, double speed) {
