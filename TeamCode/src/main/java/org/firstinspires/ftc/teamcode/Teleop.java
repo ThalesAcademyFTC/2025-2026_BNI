@@ -38,12 +38,9 @@ public class Teleop extends OpMode {
 
     double last_time;
 
+    double power = .7;
+
     public void init() {
-
-
-
-
-
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
 
         driverCentricMovement = new driverCentricMovement(mainLibrary);
@@ -66,59 +63,79 @@ public class Teleop extends OpMode {
         //telemetry.addData("Green value", mainLibrary.colorSensor.green());
         //telemetry.addData("Alpha value", mainLibrary.colorSensor.alpha());
         //telemetry.addData("Color", sensorLibrary.isColorRGB());
+        telemetry.addData("Motor Speed", () -> { return mainLibrary.cannonMotor1.getPower();});
+        telemetry.addData("Motor 2 Speed", () -> { return mainLibrary.cannonMotor2.getPower();});
     }
     public void loop() {
 
+        telemetry.update();
+
 
         double y = (-gamepad1.left_stick_y);
-        double x = (gamepad1.left_stick_x);
+        double x = (-gamepad1.left_stick_x);
         double turn = (gamepad1.right_stick_x);
 
 
         driverCentricMovement.driverMovement(x, y, turn);
         //fieldCentricMovement.fieldMovement(x, y, turn);
 
+        if (gamepad2.dpadDownWasPressed() && power != 0) {
+            power -= 0.05;
+        }
+        if (gamepad2.dpadUpWasPressed() && power != 1) {
+            power += 0.05;
+        }
 
+        if (gamepad1.right_trigger > .2) {
 
-        if (gamepad2.right_bumper) {
+            mainLibrary.intakeMotor.setPower(-1);
 
-            movement.primeLaunch();
+        } else if (gamepad1.left_trigger < -.2) {
+
+            mainLibrary.intakeMotor.setPower(1);
+
+        } else {
+
+            mainLibrary.intakeMotor.setPower(0);
 
         }
 
-        if (gamepad2.left_bumper) {
 
-            movement.restTHESERVO();
+        if (gamepad2.left_trigger >= 0.5) {
 
-        }
-        if (gamepad2.left_trigger > 0.5) {
+            movement.cannonLaunch(power);
 
-            movement.cannonLaunch();
+            if (gamepad2.right_bumper) {
 
-        } else if (gamepad2.right_trigger > 0.5) {
-            movement.cannonLaunch();
+                movement.primeLaunch();
+
+            } else {
+
+                movement.restTHESERVO();
+
+            }
+
+        } else if (gamepad2.right_trigger >= 0.5) {
+            movement.cannonLaunch(power);
 
             if (last_time == 0.0) {
                 last_time = getRuntime();
             }
 
             curr_time = getRuntime();
-            if (curr_time > (last_time + 2)) {
+            if (curr_time > (last_time + 1.5)) {
                 movement.primeLaunch();
             }
 
-            if (curr_time > (last_time + 3)) {
+            if (curr_time > (last_time + 2)) {
                 movement.restTHESERVO();
                 last_time = curr_time;
             }
 
-        } else {
+        } else if (gamepad2.right_trigger < .5 && gamepad2.left_trigger < .5) {
             last_time = 0.0;
             movement.cannonStop();
             movement.restTHESERVO();
         }
-
-
-        telemetry.update();
     }
 }

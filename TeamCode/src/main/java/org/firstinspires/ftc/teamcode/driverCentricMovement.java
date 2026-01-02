@@ -21,7 +21,6 @@ public class driverCentricMovement {
        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(turn), 1);
 
             double motorFLPower = (y + x + turn) / denominator;
-            //ryan's idea ^
             double motorBLPower = (y - x + turn) / denominator;
             double motorFRPower = (y - x - turn) / denominator;
             double motorBRPower = (y + x - turn) / denominator;

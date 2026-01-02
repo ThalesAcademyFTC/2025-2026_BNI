@@ -169,11 +169,11 @@ public class cameraLibrary {
         return tagOrientation;
     }
 
-    public Pose3D detectIfShotPossible() {
+    public boolean detectIfShotPossible() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         Pose3D tagOrientation = null;
         for (AprilTagDetection detection : currentDetections) {
-            if (detection.metadata != null) {
+            if (detection.metadata != null && !detection.metadata.name.contains("Obelisk")) {
                 tagOrientation = detection.robotPose;
                 mainLibrary.telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x,
                         detection.ftcPose.y,
@@ -192,10 +192,11 @@ public class cameraLibrary {
                     //mainLibrary.rgbIndicator.setPosition(.5);
                     //shoot
 
+
                 }
 
             }
-        } return tagOrientation;
+        }
     }
 
     public void cameraTelemetry() {

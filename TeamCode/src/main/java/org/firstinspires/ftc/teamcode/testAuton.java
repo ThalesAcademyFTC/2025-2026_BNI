@@ -51,21 +51,25 @@ public class testAuton extends LinearOpMode {
 
         waitForStart();
 
-        while(opModeIsActive()) {
+        while(opModeIsActive() && cameraLibrary.detectIfShotPossible()) {
 
             /*while (cameraLibrary.detectID() == detectedId.BLUE_GOAL) {
 
                 mainLibrary.rgbIndicator.setPosition(0.611);
 
             }
+
+             */
+
+          /*  movement.moveForward(50, 0.3);
+            sleep(1000);
+            movement.moveRight(50, 0.3);
+            sleep(1000);
+            movement.moveBackward(50, 0.3);
+            sleep(1000);
+            movement.moveLeft(50, 0.3);
 */
-            movement.moveForward(24, .1);
-            mainLibrary.waitForMotors();
-            movement.moveRight(24, .1);
-            mainLibrary.waitForMotors();
-            movement.moveBackward(24, .1);
-            mainLibrary.waitForMotors();
-            movement.moveLeft(24, .1);
+
 
             //cameraLibrary.detectIfShotPossible().getOrientation().getPitch(AngleUnit.RADIANS);
             //cameraLibrary.detectIfShotPossible().getOrientation().getRoll(AngleUnit.RADIANS);

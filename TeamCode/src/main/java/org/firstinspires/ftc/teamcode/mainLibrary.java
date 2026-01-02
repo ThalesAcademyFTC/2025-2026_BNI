@@ -57,7 +57,7 @@ public class mainLibrary {
 
     //defines motors to all classes that call main/mainlibrary
 
-    public DcMotorEx motorFL, motorFR, motorBL, motorBR, cannonMotor;
+    public DcMotorEx motorFL, motorFR, motorBL, motorBR, cannonMotor1, cannonMotor2, intakeMotor;
 
     public Servo THESERVO;
 
@@ -116,9 +116,10 @@ public class mainLibrary {
                 motorFR = (DcMotorEx) hwMap.dcMotor.get("motorFR");
                 motorBL = (DcMotorEx) hwMap.dcMotor.get("motorBL");
                 motorBR = (DcMotorEx) hwMap.dcMotor.get("motorBR");
-                //cannonMotor = (DcMotorEx) hwMap.dcMotor.get("cannonMotor");
-
-                //THESERVO = hwMap.servo.get("THESERVO");
+                cannonMotor1 = (DcMotorEx) hwMap.dcMotor.get("cannonMotor1");
+                cannonMotor2 = (DcMotorEx) hwMap.dcMotor.get("cannonMotor2");
+                intakeMotor = (DcMotorEx) hwMap.dcMotor.get("intakeMotor");
+                THESERVO = hwMap.servo.get("THESERVO");
 
                 //If a motor direction needs to be flipped:
                 motorFL.setDirection(DcMotorSimple.Direction.REVERSE);

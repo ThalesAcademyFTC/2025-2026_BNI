@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
+import static org.firstinspires.ftc.teamcode.mainLibrary.allMotors;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -12,7 +13,7 @@ public class movement {
 
     public double tickPerInch = 50;
 
-    public double tickPerDegree = 0;
+    public double tickPerDegree = (double) 500 /45;
 
     double last_time;
 
@@ -31,26 +32,36 @@ public class movement {
     }
 
     //this code should be moved to a separate class for actions, like launching in teleop or auton pls.
-    public void cannonLaunch() {
-        mainLibrary.cannonMotor.setPower(1);
+    public void cannonLaunch(double launchPower) {
+       mainLibrary.cannonMotor1.setPower(launchPower);
+       mainLibrary.cannonMotor2.setPower(-launchPower);
     }
 
     public void cannonStop() {
-        mainLibrary.cannonMotor.setPower(0);
+        mainLibrary.cannonMotor1.setPower(0);
+        mainLibrary.cannonMotor2.setPower(0);
     }
 
     public void primeLaunch() {
-        mainLibrary.THESERVO.setPosition(0.5);
+        mainLibrary.THESERVO.setPosition(.55);
+    }
+
+    public void intakeIn() {
+        mainLibrary.intakeMotor.setPower(-1);
+    }
+
+    public void intakeOut() {
+        mainLibrary.intakeMotor.setPower(1);
     }
 
     public void restTHESERVO() {
-        mainLibrary.THESERVO.setPosition(0.7);
+        mainLibrary.THESERVO.setPosition(0.2);
     }
 
     public void launchLittleBoy() {
         timer.reset();
         for (int i = 0; i < 3;) {
-            cannonLaunch();
+            cannonLaunch(1);
             if (timer.milliseconds() > 2000) {
                 primeLaunch();
             }
@@ -74,14 +85,17 @@ public class movement {
         mainLibrary.motorBL.setTargetPosition(TickTarget);
         mainLibrary.motorBR.setTargetPosition(TickTarget);
 
-        driverCentricMovement.driverMovement(0, speed, 0);
+        for (DcMotorEx x : allMotors) {
 
-        for (DcMotorEx x : mainLibrary.allMotors) {
-
-            x.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            x.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         }
 
+        driverCentricMovement.driverMovement(0, speed, 0);
+
+        for (DcMotorEx x : allMotors) {
+            x.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
 
         mainLibrary.waitForMotors();
 
@@ -101,14 +115,14 @@ public class movement {
 
         mainLibrary.resetDriveEncoders();
 
-        mainLibrary.motorFL.setTargetPosition(TickTarget);
-        mainLibrary.motorFR.setTargetPosition(-TickTarget);
-        mainLibrary.motorBL.setTargetPosition(-TickTarget);
-        mainLibrary.motorBR.setTargetPosition(TickTarget);
+        mainLibrary.motorFL.setTargetPosition(-TickTarget);
+        mainLibrary.motorFR.setTargetPosition(TickTarget);
+        mainLibrary.motorBL.setTargetPosition(TickTarget);
+        mainLibrary.motorBR.setTargetPosition(-TickTarget);
 
         driverCentricMovement.driverMovement(speed, 0, 0);
 
-        for (DcMotor x : mainLibrary.allMotors) {
+        for (DcMotor x : allMotors) {
 
             x.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -133,13 +147,13 @@ public class movement {
         mainLibrary.resetDriveEncoders();
 
         mainLibrary.motorFL.setTargetPosition(TickTarget);
-        mainLibrary.motorFR.setTargetPosition(TickTarget);
-        mainLibrary.motorBL.setTargetPosition(-TickTarget);
+        mainLibrary.motorFR.setTargetPosition(-TickTarget);
+        mainLibrary.motorBL.setTargetPosition(TickTarget);
         mainLibrary.motorBR.setTargetPosition(-TickTarget);
 
         driverCentricMovement.driverMovement(0,0,speed);
 
-        for (DcMotor x : mainLibrary.allMotors) {
+        for (DcMotor x : allMotors) {
 
             x.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
