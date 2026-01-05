@@ -81,6 +81,8 @@ public class mainLibrary {
 
     public boolean leftToggleToggle = true;
 
+    public boolean shotPossibility = false;
+
 
 
     public mainLibrary(OpMode opMode, Drivetrain drive) {

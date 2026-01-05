@@ -45,7 +45,7 @@ public class autonBlueGoal extends LinearOpMode {
 
         cameraLibrary = new cameraLibrary(this, mainLibrary);
 
-        movement = new movement(mainLibrary, driverCentricMovement);
+        movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
 
         cameraLibrary.initializeAprilTag();
 

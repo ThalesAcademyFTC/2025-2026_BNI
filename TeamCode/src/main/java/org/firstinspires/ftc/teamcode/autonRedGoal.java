@@ -18,7 +18,7 @@ public class autonRedGoal extends LinearOpMode {
 
     public sensorLibrary sensorLibrary;
 
-   // public cameraLibrary cameraLibrary;
+    public cameraLibrary cameraLibrary;
 
     public movement movement;
 
@@ -40,7 +40,7 @@ public class autonRedGoal extends LinearOpMode {
 
         //cameraLibrary = new cameraLibrary(this, mainLibrary);
 
-        movement = new movement(mainLibrary, driverCentricMovement);
+        movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
 
        // cameraLibrary.initializeAprilTag();
 

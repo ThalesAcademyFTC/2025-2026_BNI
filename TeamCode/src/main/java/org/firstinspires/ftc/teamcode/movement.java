@@ -23,7 +23,9 @@ public class movement {
 
     public driverCentricMovement driverCentricMovement;
 
-    public movement(mainLibrary mainLibrary, driverCentricMovement driverCentricMovement) {
+    public cameraLibrary cameraLibrary;
+
+    public movement(mainLibrary mainLibrary, driverCentricMovement driverCentricMovement, cameraLibrary cameraLibrary) {
 
         this.mainLibrary = mainLibrary;
 
@@ -169,6 +171,11 @@ public class movement {
     public void turnLeft(double degrees, double speed) {
 
         turnRight(-degrees, speed);
+
+    }
+
+    public void moveRightUntilSensed(double speed) {
+
 
     }
 }

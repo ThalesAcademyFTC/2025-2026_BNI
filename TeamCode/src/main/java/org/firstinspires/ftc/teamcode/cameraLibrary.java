@@ -142,7 +142,7 @@ public class cameraLibrary {
         return tagOrientation;
     }
 
-    public Pose3D tagReferencePositionFromGoal() {
+    public boolean tagReferencePositionFromGoal() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         Pose3D tagOrientation = null;
         for (AprilTagDetection detection : currentDetections) {
@@ -182,21 +182,18 @@ public class cameraLibrary {
                         detection.ftcPose.pitch,
                         detection.ftcPose.roll,
                         detection.ftcPose.yaw));
-                if (detection.ftcPose.y > 50) {
+                if (detection.ftcPose.y >= 50 && detection.ftcPose.y <= 65) {
 
-                    //mainLibrary.rgbIndicator.setPosition(.278);
-                    //no shoot
+                    mainLibrary.shotPossibility = true;
 
-                } else if (detection.ftcPose.y <= 70) {
+                } else {
 
-                    //mainLibrary.rgbIndicator.setPosition(.5);
-                    //shoot
-
+                    mainLibrary.shotPossibility = false;
 
                 }
 
             }
-        }
+        } return mainLibrary.shotPossibility;
     }
 
     public void cameraTelemetry() {

@@ -45,13 +45,23 @@ public class testAuton extends LinearOpMode {
 
         cameraLibrary = new cameraLibrary(this, mainLibrary);
 
-        movement = new movement(mainLibrary, driverCentricMovement);
+        movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
 
         cameraLibrary.initializeAprilTag();
 
         waitForStart();
 
-        while(opModeIsActive() && cameraLibrary.detectIfShotPossible()) {
+        while((opModeIsActive() && mainLibrary.shotPossibility == false)) {
+
+
+
+            movement.moveRight(12, .5);
+
+            if (cameraLibrary.tagReferencePositionFromGoal()  )
+
+            cameraLibrary.cameraTelemetry();
+
+            //telemetry.update();
 
             /*while (cameraLibrary.detectID() == detectedId.BLUE_GOAL) {
 

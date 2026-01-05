@@ -24,6 +24,8 @@ public class Teleop extends OpMode {
 
     public movement movement;
 
+    public cameraLibrary cameraLibrary;
+
     double rbtSpd = .5;
 
     double startPosition = .5;
@@ -47,7 +49,7 @@ public class Teleop extends OpMode {
 
         fieldCentricMovement = new fieldCentricMovement(mainLibrary);
 
-        movement = new movement(mainLibrary, driverCentricMovement);
+        movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
 
         //start pos 0.7
         movement.restTHESERVO();
