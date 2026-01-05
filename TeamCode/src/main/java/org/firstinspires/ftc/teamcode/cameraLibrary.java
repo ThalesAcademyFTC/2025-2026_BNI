@@ -142,7 +142,7 @@ public class cameraLibrary {
         return tagOrientation;
     }
 
-    public boolean tagReferencePositionFromGoal() {
+    public Pose3D tagReferencePositionFromGoal() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         Pose3D tagOrientation = null;
         for (AprilTagDetection detection : currentDetections) {

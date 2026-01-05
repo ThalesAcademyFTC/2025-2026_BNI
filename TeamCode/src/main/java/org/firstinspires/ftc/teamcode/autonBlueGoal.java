@@ -52,96 +52,23 @@ public class autonBlueGoal extends LinearOpMode {
         //start of the auton
         waitForStart();
 
-        movement.moveRight(12, 0.5);
+        movement.moveBackward(48, 0.5);
 
-        sleep(1000);
+        sleep(200);
 
-/*        cameraLibrary.detectIfShotPossible();
-
-        sleep(1000);
+        cameraLibrary.detectIfShotPossible();
 
         movement.launchLittleBoy();
 
-        sleep(1500);
+        sleep(500);
 
-        movement.turnRight(45, 0.5);
+        movement.turnLeft(45, 0.5);
 
-        sleep(1000);
-        movement.moveForward(24, 0.5);
+        sleep(200);
 
-        /*mainLibrary.cannonMotor.setPower(1);
-
-        if (getRuntime() >= last_time + 1.5) {
-            movement.primeLaunch();
-
-            sleep(100);
-
-            movement.restTHESERVO();
-
-            sleep(100);
-
-            mainLibrary.cannonMotor.setPower(1);
-
-            if (getRuntime() >= last_time + 5) {
-                movement.primeLaunch();
-
-                sleep(100);
-
-                movement.restTHESERVO();
-
-                sleep(100);
-
-                mainLibrary.cannonMotor.setPower(1);
-
-                if (getRuntime() >= last_time + 8.5) {
-                    movement.primeLaunch();
-
-                    sleep(100);
-
-                    movement.restTHESERVO();
-
-                    sleep(1000);
-
-                    movement.turnRight(45, 0.5);
-
-                    sleep(1000);
-
-                    movement.moveRight(12, 0.5);
-                }
-            }
-        } else {
-
-       }
-
-        if (opModeIsActive()) {
-
-            while (opModeIsActive() && motif == detectedId.UNKNOWN) {
-
-                motif = cameraLibrary.detectID();
-
-                if (motif == detectedId.GREEN_PURPLE_PURPLE) {
-                    mainLibrary.rgbIndicator.setPosition(.444); //red
-                    telemetry.addLine("Works");
-                    blackboard.put(motifPattern, detectedId.GREEN_PURPLE_PURPLE);
-                } else if (motif == detectedId.PURPLE_GREEN_PURPLE) {
-                    mainLibrary.rgbIndicator.setPosition(.333); //orange
-                    telemetry.addLine("Works");
-                    blackboard.put(motifPattern, detectedId.PURPLE_GREEN_PURPLE);
-                } else if (motif == detectedId.PURPLE_PURPLE_GREEN) {
-                    mainLibrary.rgbIndicator.setPosition(.388); //yellow
-                    telemetry.addLine("Works");
-                    blackboard.put(motifPattern, detectedId.PURPLE_PURPLE_GREEN);
-                } else {
-                    mainLibrary.rgbIndicator.setPosition(0);
-                }
-            }
+        movement.moveRight(24,0.5);
 
 
-        }
-
-        blackboard.put("MOTIF", motif);
-
-*/
 
 
 

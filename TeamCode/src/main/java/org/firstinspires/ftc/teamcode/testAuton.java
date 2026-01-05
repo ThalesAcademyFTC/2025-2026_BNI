@@ -57,7 +57,7 @@ public class testAuton extends LinearOpMode {
 
             movement.moveRight(12, .5);
 
-            if (cameraLibrary.tagReferencePositionFromGoal()  )
+            //if (cameraLibrary.tagReferencePositionFromGoal()  )
 
             cameraLibrary.cameraTelemetry();
 

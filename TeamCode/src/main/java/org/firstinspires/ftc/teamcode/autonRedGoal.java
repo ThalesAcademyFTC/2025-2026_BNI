@@ -48,63 +48,24 @@ public class autonRedGoal extends LinearOpMode {
         //start of the auton
         waitForStart();
 
-        movement.moveBackward(50, 0.5);
+        movement.moveBackward(48, 0.5);
 
-        //cameraLibrary.detectIfShotPossible();
+        sleep(200);
 
-        sleep(1000);
+        cameraLibrary.detectIfShotPossible();
 
         movement.launchLittleBoy();
 
-        sleep(1500);
+        sleep(500);
 
-        movement.turnLeft(45, 0.5);
+        movement.turnRight(45, 0.5);
 
-        sleep(1000);
+        sleep(200);
 
-        movement.moveForward(24, 0.5);
+        movement.moveLeft(24, 0.5);
 
-        /*mainLibrary.cannonMotor.setPower(1);
 
-        if (getRuntime() >= last_time + 1.5) {
-            movement.primeLaunch();
 
-            sleep(100);
-
-            movement.restTHESERVO();
-
-            sleep(100);
-
-            mainLibrary.cannonMotor.setPower(1);
-
-            if (getRuntime() >= last_time + 5) {
-                movement.primeLaunch();
-
-                sleep(100);
-
-                movement.restTHESERVO();
-
-                sleep(100);
-
-                mainLibrary.cannonMotor.setPower(1);
-
-                if (getRuntime() >= last_time + 8.5) {
-                    movement.primeLaunch();
-
-                    sleep(100);
-
-                    movement.restTHESERVO();
-
-                    sleep(1000);
-
-                    movement.turnRight(45, 0.5);
-
-                    sleep(1000);
-
-                    movement.moveRight(12, 0.5);
-                }
-            }
-        } else {*/
 
      /*   }
 
