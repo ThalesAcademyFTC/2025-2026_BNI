@@ -176,6 +176,5 @@ public class movement {
 
     public void moveRightUntilSensed(double speed) {
 
-
     }
 }

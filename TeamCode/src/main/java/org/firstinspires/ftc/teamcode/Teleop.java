@@ -65,6 +65,7 @@ public class Teleop extends OpMode {
         //telemetry.addData("Green value", mainLibrary.colorSensor.green());
         //telemetry.addData("Alpha value", mainLibrary.colorSensor.alpha());
         //telemetry.addData("Color", sensorLibrary.isColorRGB());
+        telemetry.addData("Motif Pattern is", blackboard.get(mainLibrary.motifPattern));
         telemetry.addData("Motor Speed", () -> { return mainLibrary.cannonMotor1.getPower();});
         telemetry.addData("Motor 2 Speed", () -> { return mainLibrary.cannonMotor2.getPower();});
     }

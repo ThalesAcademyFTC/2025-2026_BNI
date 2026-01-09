@@ -33,7 +33,7 @@ public class aprilTagLocalizationAuton extends LinearOpMode {
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
         sensorLibrary = new sensorLibrary(mainLibrary);
         driverCentricMovement = new driverCentricMovement(mainLibrary);
-        cameraLibrary = new cameraLibrary(this, mainLibrary);
+        cameraLibrary = new cameraLibrary(this, mainLibrary, movement, driverCentricMovement);
         movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
         cameraLibrary.initializeAprilTag();
 

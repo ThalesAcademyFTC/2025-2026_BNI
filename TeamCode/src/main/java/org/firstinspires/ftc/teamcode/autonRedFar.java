@@ -41,7 +41,7 @@ public class autonRedFar extends LinearOpMode {
 
         sensorLibrary = new sensorLibrary(mainLibrary);
 
-        cameraLibrary = new cameraLibrary(this, mainLibrary);
+        cameraLibrary = new cameraLibrary(this, mainLibrary, movement, driverCentricMovement);
 
         movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
 

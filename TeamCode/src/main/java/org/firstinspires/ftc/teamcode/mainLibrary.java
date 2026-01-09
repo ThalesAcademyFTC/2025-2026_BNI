@@ -75,6 +75,8 @@ public class mainLibrary {
 
     public IMU imu;
 
+    public String motifPattern;
+
     //for commit
 
     public Rev9AxisImu ohMyCog;
@@ -82,6 +84,10 @@ public class mainLibrary {
     public boolean leftToggleToggle = true;
 
     public boolean shotPossibility = false;
+
+    public double tagOrientationX;
+    public double tagOrientationY;
+    public double tagOrientationZ;
 
 
 

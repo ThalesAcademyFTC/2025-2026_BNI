@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
@@ -25,17 +26,29 @@ public class cameraLibrary {
 
     public ConceptAprilTagEasy conceptAprilTagEasy;
 
+    public driverCentricMovement driverCentricMovement;
+
     public AprilTagProcessor aprilTag;
 
     public HardwareMap hwMap;
 
-    public cameraLibrary(OpMode opMode, mainLibrary mainLibrary) {
+    public movement movement;
+
+    public cameraLibrary(OpMode opMode, mainLibrary mainLibrary, movement movement, driverCentricMovement driverCentricMovement) {
 
         this.hwMap = opMode.hardwareMap;
 
         this.mainLibrary = mainLibrary;
 
+        this.driverCentricMovement = driverCentricMovement;
+
     }
+
+    public double desiredX = -5;
+
+    public final double DESIRED_Y = 50;
+
+    public double desiredYaw = 4;
 
     public enum detectedId {
 
@@ -142,15 +155,15 @@ public class cameraLibrary {
         return tagOrientation;
     }
 
-    public Pose3D tagReferencePositionFromGoal() {
+    public AprilTagPoseFtc tagReferencePositionFromGoal() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-        Pose3D tagOrientation = null;
+        AprilTagPoseFtc tagOrientation = null;
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
                 mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
                 // Only use tags that don't have Obelisk in them
                 if (!detection.metadata.name.contains("Obelisk")) {
-                    tagOrientation = detection.robotPose;
+                    tagOrientation = detection.ftcPose;
                     mainLibrary.telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
                             detection.ftcPose.x,
                             detection.ftcPose.y,
@@ -169,6 +182,89 @@ public class cameraLibrary {
         return tagOrientation;
     }
 
+    public boolean moveY(double current, double desiredY) {
+        if (current >= desiredY - 2 && current <= desiredY + 2) {
+
+            return true;
+
+        } else if (current > desiredY) {
+
+            driverCentricMovement.driverMovement(0, .2, 0);
+
+        } else {
+
+            driverCentricMovement.driverMovement(0, -.2, 0);
+
+        }
+        return false;
+    }
+
+    public boolean moveX(double current, double desiredX) {
+        if (current >= desiredX - 2 && current <= desiredX + 2) {
+
+            return true;
+
+        } else if (current > desiredX) {
+
+            driverCentricMovement.driverMovement(-.2, 0, 0);
+
+        } else {
+
+            driverCentricMovement.driverMovement(.2, 0, 0);
+
+        }
+        return false;
+    }
+
+    public boolean moveYaw(double current, double desiredYaw) {
+        if (current >= desiredYaw - 2 && current <= desiredYaw + 2) {
+
+            return true;
+
+        } else if (current > desiredYaw) {
+
+            driverCentricMovement.driverMovement(0,0, -.2);
+
+        } else {
+
+            driverCentricMovement.driverMovement(0,0,.2);
+
+        }
+        return false;
+    }
+   /* public boolean moveToDesiredGoalPos() {
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                // Only use tags that don't have Obelisk in them
+                if (detection.metadata.name.contains("Goal")) {
+                    mainLibrary.tagOrientationX = detection.ftcPose.x;
+                    mainLibrary.tagOrientationY = detection.ftcPose.y;
+                    mainLibrary.tagOrientationZ = detection.ftcPose.z;
+                    mainLibrary.telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
+                            detection.ftcPose.x,
+                            detection.ftcPose.y,
+                            detection.ftcPose.z));
+                    mainLibrary.telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)",
+                            detection.ftcPose.pitch,
+                            detection.ftcPose.roll,
+                            detection.ftcPose.yaw));
+                }
+                moveY(mainLibrary.tagOrientationY, desiredY);
+
+
+
+            } else {
+                mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+                mainLibrary.telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+            }
+        }
+        return false;
+    }
+
+
+*/
     public boolean detectIfShotPossible() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         Pose3D tagOrientation = null;

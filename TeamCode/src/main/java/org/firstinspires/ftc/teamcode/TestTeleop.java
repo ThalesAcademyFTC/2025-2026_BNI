@@ -39,6 +39,8 @@ public class TestTeleop extends OpMode {
 
     public AprilTagProcessor aprilTagProcessor;
 
+    public movement movement;
+
     double rbtSpd = .5;
 
     double startPosition = .5;
@@ -63,7 +65,7 @@ public class TestTeleop extends OpMode {
 
         sensorLibrary = new sensorLibrary(mainLibrary);
 
-        cameraLibrary = new cameraLibrary(this, mainLibrary);
+        cameraLibrary = new cameraLibrary(this, mainLibrary, movement, driverCentricMovement);
 
         cameraLibrary.initializeAprilTag();
 

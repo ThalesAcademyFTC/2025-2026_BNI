@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEasy;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import org.firstinspires.ftc.teamcode.cameraLibrary.detectedId;
@@ -32,6 +34,8 @@ public class testAuton extends LinearOpMode {
 
     public double distanceForShot; //needs a value
 
+    public boolean inPosition = false;
+
 
     public void runOpMode() {
 
@@ -43,7 +47,7 @@ public class testAuton extends LinearOpMode {
 
         sensorLibrary = new sensorLibrary(mainLibrary);
 
-        cameraLibrary = new cameraLibrary(this, mainLibrary);
+        cameraLibrary = new cameraLibrary(this, mainLibrary, movement, driverCentricMovement);
 
         movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
 
@@ -51,17 +55,23 @@ public class testAuton extends LinearOpMode {
 
         waitForStart();
 
-        while((opModeIsActive() && mainLibrary.shotPossibility == false)) {
+        AprilTagPoseFtc pose;
+        while (!inPosition) {
+            pose = cameraLibrary.tagReferencePositionFromGoal();
+            if (pose == null) {
+                telemetry.addData("No april tag found :(", pose);
+                telemetry.update();
+            } else {
+                inPosition = cameraLibrary.moveYaw(pose.yaw, cameraLibrary.desiredYaw);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking yaw position %6.1f / %6.1f", pose.y, cameraLibrary.DESIRED_Y));
+                telemetry.update();
+            }
+        }
 
 
+            /*cameraLibrary.detectIfShotPossible();
 
-            movement.moveRight(12, .5);
-
-            //if (cameraLibrary.tagReferencePositionFromGoal()  )
-
-            cameraLibrary.cameraTelemetry();
-
-            //telemetry.update();
+            telemetry.update();
 
             /*while (cameraLibrary.detectID() == detectedId.BLUE_GOAL) {
 
@@ -141,4 +151,4 @@ public class testAuton extends LinearOpMode {
 
 
     }
-}
+
