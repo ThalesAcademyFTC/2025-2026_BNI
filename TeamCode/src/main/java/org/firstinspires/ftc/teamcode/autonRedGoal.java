@@ -30,6 +30,8 @@ public class autonRedGoal extends LinearOpMode {
 
     public String motifPattern;
 
+    double speed = 0.5;
+
     public void runOpMode() {
 
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
@@ -38,31 +40,35 @@ public class autonRedGoal extends LinearOpMode {
 
         sensorLibrary = new sensorLibrary(mainLibrary);
 
-        //cameraLibrary = new cameraLibrary(this, mainLibrary);
+        cameraLibrary = new cameraLibrary(this, mainLibrary);
 
         movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
 
-       // cameraLibrary.initializeAprilTag();
+        cameraLibrary.initializeAprilTag();
 
 
         //start of the auton
         waitForStart();
 
-        movement.moveBackward(48, 0.5);
+        movement.moveBackward(48, speed);
 
         sleep(200);
 
         cameraLibrary.detectIfShotPossible();
 
-        movement.launchLittleBoy();
+        if (mainLibrary.shotPossibility){
+
+            movement.launchLittleBoy(0.5);
+
+        }
 
         sleep(500);
 
-        movement.turnRight(45, 0.5);
+        movement.turnRight(45, speed);
 
         sleep(200);
 
-        movement.moveLeft(24, 0.5);
+        movement.moveLeft(48, speed);
 
 
 

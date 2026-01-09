@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.cameraLibrary.detectedId;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 @Autonomous
-public class autonBlueGoal extends LinearOpMode {
+public class autonBlueFar extends LinearOpMode {
 
     public driverCentricMovement driverCentricMovement;
 
@@ -32,6 +32,7 @@ public class autonBlueGoal extends LinearOpMode {
 
     double speed = 0.5;
 
+
     public void runOpMode() {
 
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
@@ -49,28 +50,23 @@ public class autonBlueGoal extends LinearOpMode {
         //start of the auton
         waitForStart();
 
-        movement.moveBackward(48, speed);
+        movement.moveForward(3, speed);
 
         sleep(200);
 
-        cameraLibrary.detectIfShotPossible();
+        movement.turnLeft(24, speed);
 
-        if (mainLibrary.shotPossibility){
+        sleep(200);
 
-            movement.launchLittleBoy(0.5);
-
-        }
+        movement.launchLittleBoy(1);
 
         sleep(500);
 
-        movement.turnLeft(45, speed);
+        movement.turnRight(24, speed);
 
         sleep(200);
 
-        movement.moveRight(24,speed);
-
-
-
+        movement.moveLeft(48, speed);
 
 
     }

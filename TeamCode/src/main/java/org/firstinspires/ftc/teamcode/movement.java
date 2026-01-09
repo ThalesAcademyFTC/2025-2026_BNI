@@ -60,10 +60,10 @@ public class movement {
         mainLibrary.THESERVO.setPosition(0.2);
     }
 
-    public void launchLittleBoy() {
+    public void launchLittleBoy(double launchPower) {
         timer.reset();
         for (int i = 0; i < 3;) {
-            cannonLaunch(1);
+            cannonLaunch(launchPower);
             if (timer.milliseconds() > 2000) {
                 primeLaunch();
             }
