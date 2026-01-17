@@ -34,7 +34,11 @@ public class testAuton extends LinearOpMode {
 
     public double distanceForShot; //needs a value
 
-    public boolean inPosition = false;
+    public boolean inPositionY = false;
+
+    public boolean inPositionX = false;
+
+    public boolean inPositionZ = false;
 
 
     public void runOpMode() {
@@ -56,14 +60,40 @@ public class testAuton extends LinearOpMode {
         waitForStart();
 
         AprilTagPoseFtc pose;
-        while (!inPosition) {
-            pose = cameraLibrary.tagReferencePositionFromGoal();
-            if (pose == null) {
-                telemetry.addData("No april tag found :(", pose);
+        AprilTagPoseFtc pose1;
+        AprilTagPoseFtc pose2;
+
+
+        while (!inPositionZ) {
+            pose2 = cameraLibrary.tagReferencePositionFromGoal();
+            if (pose2 == null) {
+                telemetry.addData("No april tag found :(", pose2);
                 telemetry.update();
             } else {
-                inPosition = cameraLibrary.moveYaw(pose.yaw, cameraLibrary.desiredYaw);
-                mainLibrary.telemetry.addLine(String.format("Tag found tracking yaw position %6.1f / %6.1f", pose.y, cameraLibrary.DESIRED_Y));
+                inPositionZ = cameraLibrary.moveYaw(pose2.yaw, cameraLibrary.DESIRED_YAW);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose2.yaw, cameraLibrary.DESIRED_YAW));
+                telemetry.update();
+            }
+        }
+        while (!inPositionY) {
+            pose = cameraLibrary.tagReferencePositionFromGoal();
+            if (pose == null) {
+                    telemetry.addData("No april tag found :(", pose);
+                    telemetry.update();
+            } else {
+                    inPositionY = cameraLibrary.moveY(pose.y, cameraLibrary.DESIRED_Y);
+                    mainLibrary.telemetry.addLine(String.format("Tag found tracking Y position %6.1f / %6.1f", pose.y, cameraLibrary.DESIRED_Y));
+                    telemetry.update();
+            }
+        }
+        while (!inPositionX) {
+            pose1 = cameraLibrary.tagReferencePositionFromGoal();
+            if (pose1 == null) {
+                telemetry.addData("No april tag found :(", pose1);
+                telemetry.update();
+            } else {
+                inPositionX = cameraLibrary.moveX(pose1.x, cameraLibrary.DESIRED_X);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose1.x, cameraLibrary.DESIRED_X));
                 telemetry.update();
             }
         }

@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEasy;
+import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import org.firstinspires.ftc.teamcode.cameraLibrary.detectedId;
@@ -36,23 +37,14 @@ public class aprilTagLocalizationAuton extends LinearOpMode {
         cameraLibrary = new cameraLibrary(this, mainLibrary, movement, driverCentricMovement);
         movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
         cameraLibrary.initializeAprilTag();
-
-        telemetry.addData("Yaw angle", cameraLibrary.yawAccordingToAprilTag());
+        telemetry.addData("Yaw angle", () -> {return cameraLibrary.yawAccordingToAprilTag();});
 
         waitForStart();
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
 
-                if (cameraLibrary.detectID() == detectedId.BLUE_GOAL) {
-
-                    movement.turnLeft(360, .2);
-
-                    //mainLibrary.waitForMotors();
-
-                    //cameraLibrary.detectIfShotPossible();
-
-                }
+                cameraLibrary.cameraTelemetry();
 
                 telemetry.update();
 

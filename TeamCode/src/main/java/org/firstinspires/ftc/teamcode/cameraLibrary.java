@@ -44,11 +44,11 @@ public class cameraLibrary {
 
     }
 
-    public double desiredX = -5;
+    public double DESIRED_X = -7.6;
 
-    public final double DESIRED_Y = 50;
+    public final double DESIRED_Y = 71;
 
-    public double desiredYaw = 4;
+    public final double DESIRED_YAW = -13;
 
     public enum detectedId {
 
@@ -206,28 +206,24 @@ public class cameraLibrary {
 
         } else if (current > desiredX) {
 
-            driverCentricMovement.driverMovement(-.2, 0, 0);
+            driverCentricMovement.driverMovement(.2, 0, 0);
 
         } else {
 
-            driverCentricMovement.driverMovement(.2, 0, 0);
+            driverCentricMovement.driverMovement(-.2, 0, 0);
 
         }
         return false;
     }
 
     public boolean moveYaw(double current, double desiredYaw) {
-        if (current >= desiredYaw - 2 && current <= desiredYaw + 2) {
+        if (current >= desiredYaw - 4 && current <= desiredYaw + 4) {
 
             return true;
 
-        } else if (current > desiredYaw) {
-
-            driverCentricMovement.driverMovement(0,0, -.2);
-
         } else {
 
-            driverCentricMovement.driverMovement(0,0,.2);
+            driverCentricMovement.driverMovement(0,0,-.2);
 
         }
         return false;

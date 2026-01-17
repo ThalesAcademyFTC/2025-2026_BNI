@@ -40,7 +40,7 @@ public class Teleop extends OpMode {
 
     double last_time;
 
-    double power = .7;
+    double power = .95;
 
     public void init() {
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
@@ -81,6 +81,16 @@ public class Teleop extends OpMode {
 
         driverCentricMovement.driverMovement(x, y, turn);
         //fieldCentricMovement.fieldMovement(x, y, turn);
+
+        if (gamepad2.a) {
+
+            movement.primeLaunch();
+
+        } else if (gamepad1.aWasReleased()){
+
+            movement.restTHESERVO();
+
+        }
 
         if (gamepad2.dpadDownWasPressed() && power != 0) {
             power -= 0.05;

@@ -35,8 +35,8 @@ public class movement {
 
     //this code should be moved to a separate class for actions, like launching in teleop or auton pls.
     public void cannonLaunch(double launchPower) {
-       mainLibrary.cannonMotor1.setPower(launchPower);
-       mainLibrary.cannonMotor2.setPower(-launchPower);
+       mainLibrary.cannonMotor1.setPower(-launchPower);
+       mainLibrary.cannonMotor2.setPower(launchPower);
     }
 
     public void cannonStop() {
@@ -45,19 +45,19 @@ public class movement {
     }
 
     public void primeLaunch() {
-        mainLibrary.THESERVO.setPosition(.55);
+        mainLibrary.THESERVO.setPosition(.34);
     }
 
     public void intakeIn() {
-        mainLibrary.intakeMotor.setPower(-1);
-    }
-
-    public void intakeOut() {
         mainLibrary.intakeMotor.setPower(1);
     }
 
+    public void intakeOut() {
+        mainLibrary.intakeMotor.setPower(-1);
+    }
+
     public void restTHESERVO() {
-        mainLibrary.THESERVO.setPosition(0.2);
+        mainLibrary.THESERVO.setPosition(.5);
     }
 
     public void launchLittleBoy(double launchPower) {
