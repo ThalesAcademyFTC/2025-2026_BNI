@@ -32,6 +32,12 @@ public class autonRedGoal extends LinearOpMode {
 
     double speed = 0.5;
 
+    double X = 7.6;
+
+    final double Y = -61;
+
+    final double YAW = 13;
+
     public void runOpMode() {
 
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
@@ -54,13 +60,7 @@ public class autonRedGoal extends LinearOpMode {
 
         sleep(200);
 
-        cameraLibrary.detectIfShotPossible();
-
-        if (mainLibrary.shotPossibility){
-
-            movement.launchLittleBoy(0.5);
-
-        }
+        cameraLibrary.autoPositionGoal(X, Y, YAW);
 
         sleep(500);
 

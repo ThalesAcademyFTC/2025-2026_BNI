@@ -32,6 +32,8 @@ public class autonBlueFar extends LinearOpMode {
 
     double speed = 0.5;
 
+    double power = .95;
+
 
     public void runOpMode() {
 
@@ -58,7 +60,7 @@ public class autonBlueFar extends LinearOpMode {
 
         sleep(200);
 
-        movement.launchLittleBoy(1);
+        movement.launchLittleBoy(power);
 
         sleep(500);
 

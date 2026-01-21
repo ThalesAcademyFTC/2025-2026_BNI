@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 
@@ -34,6 +35,10 @@ public class cameraLibrary {
 
     public movement movement;
 
+    public OpMode opmode;
+
+    public LinearOpMode auton;
+
     public cameraLibrary(OpMode opMode, mainLibrary mainLibrary, movement movement, driverCentricMovement driverCentricMovement) {
 
         this.hwMap = opMode.hardwareMap;
@@ -42,13 +47,22 @@ public class cameraLibrary {
 
         this.driverCentricMovement = driverCentricMovement;
 
+        this.opmode = opMode;
+
+    }
+    public cameraLibrary(LinearOpMode opMode, mainLibrary mainLibrary, movement movement, driverCentricMovement driverCentricMovement) {
+
+        this.hwMap = opMode.hardwareMap;
+
+        this.mainLibrary = mainLibrary;
+
+        this.driverCentricMovement = driverCentricMovement;
+
+        this.opmode = opMode;
+
     }
 
-    public double DESIRED_X = -7.6;
 
-    public final double DESIRED_Y = 61;
-
-    public final double DESIRED_YAW = -13;
 
     public enum detectedId {
 
@@ -306,4 +320,49 @@ public class cameraLibrary {
             }
     }
 
-}}
+}
+
+    public void autoPositionGoal(double x, double y, double yaw) {
+        AprilTagPoseFtc pose;
+        AprilTagPoseFtc pose1;
+        AprilTagPoseFtc pose2;
+
+        boolean inPositionY = false;
+        boolean inPositionX = false;
+        boolean inPositionZ = false;
+
+        while (!inPositionZ && !auton.isStopRequested()) {
+            pose2 = tagReferencePositionFromGoal();
+            if (pose2 == null) {
+                mainLibrary.telemetry.addData("No april tag found :(", pose2);
+                mainLibrary.telemetry.update();
+            } else {
+                inPositionZ = moveYaw(pose2.yaw, yaw);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose2.yaw, yaw));
+                mainLibrary.telemetry.update();
+            }
+        }
+        while (!inPositionY && !auton.isStopRequested()) {
+            pose = tagReferencePositionFromGoal();
+            if (pose == null) {
+                mainLibrary.telemetry.addData("No april tag found :(", pose);
+                mainLibrary.telemetry.update();
+            } else {
+                inPositionY = moveY(pose.y, y);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking Y position %6.1f / %6.1f", pose.y, y));
+                mainLibrary.telemetry.update();
+            }
+        }
+        while (!inPositionX && !auton.isStopRequested()) {
+            pose1 = tagReferencePositionFromGoal();
+            if (pose1 == null) {
+                mainLibrary.telemetry.addData("No april tag found :(", pose1);
+                mainLibrary.telemetry.update();
+            } else {
+                inPositionX = moveX(pose1.x, x);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose1.x, x));
+                mainLibrary.telemetry.update();
+            }
+        }
+    }
+}

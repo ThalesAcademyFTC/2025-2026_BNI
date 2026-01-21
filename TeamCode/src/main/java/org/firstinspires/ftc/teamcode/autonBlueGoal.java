@@ -39,6 +39,15 @@ public class autonBlueGoal extends LinearOpMode {
 
     double speed = 0.5;
 
+    double power = .85;
+
+    double X = -7.6;
+
+    final double Y = 61;
+
+    final double YAW = -13;
+
+
     public void runOpMode() {
 
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
@@ -60,11 +69,13 @@ public class autonBlueGoal extends LinearOpMode {
         AprilTagPoseFtc pose1;
         AprilTagPoseFtc pose2;
 
-        //movement.moveBackward(24, speed);
+        movement.moveBackward(48, speed);
 
-        //sleep(200);
+        sleep(200);
 
-        while (!inPositionZ) {
+        cameraLibrary.autoPositionGoal(X, Y, YAW);
+
+        /*while (!inPositionZ && !isStopRequested()) {
             pose2 = cameraLibrary.tagReferencePositionFromGoal();
             if (pose2 == null) {
                 telemetry.addData("No april tag found :(", pose2);
@@ -75,7 +86,7 @@ public class autonBlueGoal extends LinearOpMode {
                 telemetry.update();
             }
         }
-        while (!inPositionY) {
+        while (!inPositionY && !isStopRequested()) {
             pose = cameraLibrary.tagReferencePositionFromGoal();
             if (pose == null) {
                 telemetry.addData("No april tag found :(", pose);
@@ -86,7 +97,7 @@ public class autonBlueGoal extends LinearOpMode {
                 telemetry.update();
             }
         }
-        while (!inPositionX) {
+        while (!inPositionX && !isStopRequested()) {
             pose1 = cameraLibrary.tagReferencePositionFromGoal();
             if (pose1 == null) {
                 telemetry.addData("No april tag found :(", pose1);
@@ -96,25 +107,17 @@ public class autonBlueGoal extends LinearOpMode {
                 mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose1.x, cameraLibrary.DESIRED_X));
                 telemetry.update();
             }
-        }
+        }*/
 
-        movement.launchLittleBoy(1);
-
-        sleep(500);
-
-        movement.launchLittleBoy(1);
+        movement.launchLittleBoy(power);
 
         sleep(500);
 
-        movement.launchLittleBoy(1);
+        movement.turnLeft(45, speed);
 
-        //sleep(500);
+        sleep(200);
 
-        //movement.turnLeft(45, speed);
-
-        //sleep(200);
-
-        //movement.moveRight(24,speed);
+        movement.moveRight(24,speed);
 
 
 
