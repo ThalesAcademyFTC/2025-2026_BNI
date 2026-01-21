@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEasy;
 import org.firstinspires.ftc.teamcode.cameraLibrary.detectedId;
+import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 @Autonomous
@@ -30,6 +31,12 @@ public class autonBlueGoal extends LinearOpMode {
 
     public String motifPattern;
 
+    public boolean inPositionY = false;
+
+    public boolean inPositionX = false;
+
+    public boolean inPositionZ = false;
+
     double speed = 0.5;
 
     public void runOpMode() {
@@ -49,25 +56,65 @@ public class autonBlueGoal extends LinearOpMode {
         //start of the auton
         waitForStart();
 
-        movement.moveBackward(48, speed);
+        AprilTagPoseFtc pose;
+        AprilTagPoseFtc pose1;
+        AprilTagPoseFtc pose2;
 
-        sleep(200);
+        //movement.moveBackward(24, speed);
 
-        cameraLibrary.detectIfShotPossible();
+        //sleep(200);
 
-        if (mainLibrary.shotPossibility){
-
-            movement.launchLittleBoy(0.5);
-
+        while (!inPositionZ) {
+            pose2 = cameraLibrary.tagReferencePositionFromGoal();
+            if (pose2 == null) {
+                telemetry.addData("No april tag found :(", pose2);
+                telemetry.update();
+            } else {
+                inPositionZ = cameraLibrary.moveYaw(pose2.yaw, cameraLibrary.DESIRED_YAW);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose2.yaw, cameraLibrary.DESIRED_YAW));
+                telemetry.update();
+            }
         }
+        while (!inPositionY) {
+            pose = cameraLibrary.tagReferencePositionFromGoal();
+            if (pose == null) {
+                telemetry.addData("No april tag found :(", pose);
+                telemetry.update();
+            } else {
+                inPositionY = cameraLibrary.moveY(pose.y, cameraLibrary.DESIRED_Y);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking Y position %6.1f / %6.1f", pose.y, cameraLibrary.DESIRED_Y));
+                telemetry.update();
+            }
+        }
+        while (!inPositionX) {
+            pose1 = cameraLibrary.tagReferencePositionFromGoal();
+            if (pose1 == null) {
+                telemetry.addData("No april tag found :(", pose1);
+                telemetry.update();
+            } else {
+                inPositionX = cameraLibrary.moveX(pose1.x, cameraLibrary.DESIRED_X);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose1.x, cameraLibrary.DESIRED_X));
+                telemetry.update();
+            }
+        }
+
+        movement.launchLittleBoy(1);
 
         sleep(500);
 
-        movement.turnLeft(45, speed);
+        movement.launchLittleBoy(1);
 
-        sleep(200);
+        sleep(500);
 
-        movement.moveRight(24,speed);
+        movement.launchLittleBoy(1);
+
+        //sleep(500);
+
+        //movement.turnLeft(45, speed);
+
+        //sleep(200);
+
+        //movement.moveRight(24,speed);
 
 
 

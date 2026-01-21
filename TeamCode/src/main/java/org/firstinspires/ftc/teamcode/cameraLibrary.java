@@ -46,7 +46,7 @@ public class cameraLibrary {
 
     public double DESIRED_X = -7.6;
 
-    public final double DESIRED_Y = 71;
+    public final double DESIRED_Y = 61;
 
     public final double DESIRED_YAW = -13;
 
@@ -92,6 +92,7 @@ public class cameraLibrary {
         VisionPortal visionPortal = builder.build();
 
     }
+
     public detectedId detectID() {
         detectedId idDetected = detectedId.UNKNOWN;
         List <AprilTagDetection> currentDetections = aprilTag.getDetections();

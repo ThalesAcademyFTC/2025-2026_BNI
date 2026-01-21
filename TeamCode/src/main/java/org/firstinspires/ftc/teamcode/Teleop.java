@@ -74,6 +74,7 @@ public class Teleop extends OpMode {
         telemetry.update();
 
 
+        //sets the move function to controller values
         double y = (-gamepad1.left_stick_y);
         double x = (-gamepad1.left_stick_x);
         double turn = (gamepad1.right_stick_x);
@@ -82,13 +83,17 @@ public class Teleop extends OpMode {
         driverCentricMovement.driverMovement(x, y, turn);
         //fieldCentricMovement.fieldMovement(x, y, turn);
 
-        if (gamepad2.a) {
+        if (gamepad2.left_bumper && mainLibrary.leftToggleToggle) {
 
             movement.primeLaunch();
 
-        } else if (gamepad1.aWasReleased()){
+            mainLibrary.leftToggleToggle = false;
+
+        } else if ((gamepad2.right_bumper && !mainLibrary.leftToggleToggle)){
 
             movement.restTHESERVO();
+
+            mainLibrary.leftToggleToggle = true;
 
         }
 
@@ -99,34 +104,9 @@ public class Teleop extends OpMode {
             power += 0.05;
         }
 
-        if (gamepad1.right_trigger > .2) {
-
-            mainLibrary.intakeMotor.setPower(-1);
-
-        } else if (gamepad1.left_trigger < -.2) {
-
-            mainLibrary.intakeMotor.setPower(1);
-
-        } else {
-
-            mainLibrary.intakeMotor.setPower(0);
-
-        }
-
-
         if (gamepad2.left_trigger >= 0.5) {
 
             movement.cannonLaunch(power);
-
-            if (gamepad2.right_bumper) {
-
-                movement.primeLaunch();
-
-            } else {
-
-                movement.restTHESERVO();
-
-            }
 
         } else if (gamepad2.right_trigger >= 0.5) {
             movement.cannonLaunch(power);
@@ -148,7 +128,6 @@ public class Teleop extends OpMode {
         } else if (gamepad2.right_trigger < .5 && gamepad2.left_trigger < .5) {
             last_time = 0.0;
             movement.cannonStop();
-            movement.restTHESERVO();
         }
     }
 }
