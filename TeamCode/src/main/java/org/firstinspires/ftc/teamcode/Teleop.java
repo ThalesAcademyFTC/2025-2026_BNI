@@ -40,7 +40,7 @@ public class Teleop extends OpMode {
 
     double last_time;
 
-    double power = .95;
+    double power = .96;
 
     public void init() {
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
@@ -76,8 +76,8 @@ public class Teleop extends OpMode {
 
         //sets the move function to controller values
         double y = (-gamepad1.left_stick_y);
-        double x = (-gamepad1.left_stick_x);
-        double turn = (gamepad1.right_stick_x);
+        double x = (gamepad1.left_stick_x);
+        double turn = (gamepad1.right_stick_x/1.5);
 
 
         driverCentricMovement.driverMovement(x, y, turn);
@@ -98,10 +98,10 @@ public class Teleop extends OpMode {
         }
 
         if (gamepad2.dpadDownWasPressed() && power != 0) {
-            power -= 0.05;
+            power -= 0.01;
         }
         if (gamepad2.dpadUpWasPressed() && power != 1) {
-            power += 0.05;
+            power += 0.01;
         }
 
         if (gamepad2.left_trigger >= 0.5) {
@@ -116,18 +116,21 @@ public class Teleop extends OpMode {
             }
 
             curr_time = getRuntime();
-            if (curr_time > (last_time + 1.5)) {
+            if (curr_time > (last_time + 1.25)) {
                 movement.primeLaunch();
             }
 
-            if (curr_time > (last_time + 2)) {
+            if (curr_time > (last_time + 1.75)) {
                 movement.restTHESERVO();
                 last_time = curr_time;
+                power -= .01;
             }
 
         } else if (gamepad2.right_trigger < .5 && gamepad2.left_trigger < .5) {
             last_time = 0.0;
             movement.cannonStop();
+            movement.restTHESERVO();
+            power = .96;
         }
     }
 }

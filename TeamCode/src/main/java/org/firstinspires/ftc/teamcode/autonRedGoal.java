@@ -56,11 +56,11 @@ public class autonRedGoal extends LinearOpMode {
         //start of the auton
         waitForStart();
 
-        movement.moveBackward(48, speed);
+        movement.moveBackward(40, speed);
 
         sleep(200);
 
-        cameraLibrary.autoPositionGoal(X, Y, YAW);
+        cameraLibrary.autoPositionRed(X, Y, YAW);
 
         sleep(500);
 

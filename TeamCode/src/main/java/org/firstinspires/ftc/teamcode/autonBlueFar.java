@@ -32,7 +32,11 @@ public class autonBlueFar extends LinearOpMode {
 
     double speed = 0.5;
 
-    double power = .95;
+    double X;
+
+    double Y = 112;
+
+    double YAW = 20;
 
 
     public void runOpMode() {
@@ -52,15 +56,31 @@ public class autonBlueFar extends LinearOpMode {
         //start of the auton
         waitForStart();
 
-        movement.moveForward(3, speed);
+        movement.moveForward(7, speed);
+
+        movement.turnLeft(25, speed);
 
         sleep(200);
 
-        movement.turnLeft(24, speed);
+        movement.moveForward(12, speed);
 
         sleep(200);
 
-        movement.launchLittleBoy(power);
+        movement.turnLeft(10, .1);
+
+        sleep(200);
+
+        cameraLibrary.autoPositionBlue(X,Y,YAW);
+
+        mainLibrary.restMotors();
+
+        sleep(200);
+
+        movement.moveLeft(2, speed);
+
+        sleep(200);
+
+        movement.launchLittleBoy(1);
 
         sleep(500);
 
@@ -68,7 +88,7 @@ public class autonBlueFar extends LinearOpMode {
 
         sleep(200);
 
-        movement.moveLeft(48, speed);
+        movement.moveLeft(24, speed);
 
 
     }

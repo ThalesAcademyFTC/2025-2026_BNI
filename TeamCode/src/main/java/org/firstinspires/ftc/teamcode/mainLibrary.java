@@ -126,7 +126,7 @@ public class mainLibrary {
                 motorBR = (DcMotorEx) hwMap.dcMotor.get("motorBR");
                 cannonMotor1 = (DcMotorEx) hwMap.dcMotor.get("cannonMotor1");
                 cannonMotor2 = (DcMotorEx) hwMap.dcMotor.get("cannonMotor2");
-                intakeMotor = (DcMotorEx) hwMap.dcMotor.get("intakeMotor");
+                //intakeMotor = (DcMotorEx) hwMap.dcMotor.get("intakeMotor");
                 THESERVO = hwMap.servo.get("THESERVO");
 
                 //If a motor direction needs to be flipped:
@@ -176,6 +176,15 @@ public class mainLibrary {
             x.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             x.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
+    }
+
+    public void restMotors() {
+
+        motorFL.setPower(0);
+        motorFR.setPower(0);
+        motorBL.setPower(0);
+        motorBR.setPower(0);
+
     }
 
     public void waitForMotors() {

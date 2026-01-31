@@ -32,6 +32,11 @@ public class autonRedFar extends LinearOpMode {
 
     double speed = 0.5;
 
+    double X;
+
+    double Y;
+
+    double YAW;
 
     public void runOpMode() {
 
@@ -54,7 +59,7 @@ public class autonRedFar extends LinearOpMode {
 
         sleep(200);
 
-        movement.turnRight(24, speed);
+        cameraLibrary.autoPositionRed(X,Y,YAW);
 
         sleep(200);
 
@@ -66,6 +71,6 @@ public class autonRedFar extends LinearOpMode {
 
         sleep(200);
 
-        movement.moveRight(48, speed);
+        movement.moveRight(24, speed);
     }
 }

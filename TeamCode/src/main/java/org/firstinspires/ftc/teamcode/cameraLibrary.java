@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static com.qualcomm.robotcore.eventloop.opmode.OpMode.blackboard;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -58,7 +60,7 @@ public class cameraLibrary {
 
         this.driverCentricMovement = driverCentricMovement;
 
-        this.opmode = opMode;
+        this.auton = opMode;
 
     }
 
@@ -95,7 +97,7 @@ public class cameraLibrary {
         aprilTag = new AprilTagProcessor.Builder().setCameraPose(cameraPosition, cameraOrientation).build();
 
         if (useWebcam) {
-            builder.setCamera(hwMap.get(WebcamName.class, "Logitech Webcam"));
+            builder.setCamera(hwMap.get(WebcamName.class, "Webcam 1"));
             //visionPortal = VisionPortal.easyCreateWithDefaults(hwMap.get(WebcamName.class, "Logitech Webcam"));
         } else {
             builder.setCamera(BuiltinCameraDirection.BACK);
@@ -143,6 +145,28 @@ public class cameraLibrary {
     }
 
     //may detect two tags at once and only return one. please fix later
+
+    public void detectMotifPattern() {
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                // Only use tags that don't have Obelisk in them
+                if (detection.metadata.name.contains("Obelisk")) {
+                    if (detection.id == 21) {
+                        //blackboard.put(mainLibrary.motifPattern, green purple purple);
+                    } else if (detection.id == 22) {
+                        //blackboard.put(mainLibrary.motifPattern, purple green purple);
+                    } else if (detection.id == 23) {
+                        //blackboard.put(mainLibrary.motifPattern, purple purple green);
+                    } else {
+                        mainLibrary.telemetry.addLine("Obelisk april tag not found");
+                    }
+                }
+            }
+        }
+    }
+
     public Pose3D tagReferencePosition() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         Pose3D tagOrientation = null;
@@ -170,14 +194,41 @@ public class cameraLibrary {
         return tagOrientation;
     }
 
-    public AprilTagPoseFtc tagReferencePositionFromGoal() {
+    public AprilTagPoseFtc tagReferencePositionFromBlue() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         AprilTagPoseFtc tagOrientation = null;
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
                 mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
                 // Only use tags that don't have Obelisk in them
-                if (!detection.metadata.name.contains("Obelisk")) {
+                if (detection.metadata.name.contains("Blue")) {
+                    tagOrientation = detection.ftcPose;
+                    mainLibrary.telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
+                            detection.ftcPose.x,
+                            detection.ftcPose.y,
+                            detection.ftcPose.z));
+                    mainLibrary.telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)",
+                            detection.ftcPose.pitch,
+                            detection.ftcPose.roll,
+                            detection.ftcPose.yaw));
+                }
+            }
+            else {
+                mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+                mainLibrary.telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+            }
+        }
+        return tagOrientation;
+    }
+
+    public AprilTagPoseFtc tagReferencePositionFromRed() {
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        AprilTagPoseFtc tagOrientation = null;
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                // Only use tags that don't have Obelisk in them
+                if (detection.metadata.name.contains("Red")) {
                     tagOrientation = detection.ftcPose;
                     mainLibrary.telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
                             detection.ftcPose.x,
@@ -322,7 +373,7 @@ public class cameraLibrary {
 
 }
 
-    public void autoPositionGoal(double x, double y, double yaw) {
+    public void autoPositionBlue(double x, double y, double yaw) {
         AprilTagPoseFtc pose;
         AprilTagPoseFtc pose1;
         AprilTagPoseFtc pose2;
@@ -332,7 +383,7 @@ public class cameraLibrary {
         boolean inPositionZ = false;
 
         while (!inPositionZ && !auton.isStopRequested()) {
-            pose2 = tagReferencePositionFromGoal();
+            pose2 = tagReferencePositionFromBlue();
             if (pose2 == null) {
                 mainLibrary.telemetry.addData("No april tag found :(", pose2);
                 mainLibrary.telemetry.update();
@@ -343,7 +394,7 @@ public class cameraLibrary {
             }
         }
         while (!inPositionY && !auton.isStopRequested()) {
-            pose = tagReferencePositionFromGoal();
+            pose = tagReferencePositionFromBlue();
             if (pose == null) {
                 mainLibrary.telemetry.addData("No april tag found :(", pose);
                 mainLibrary.telemetry.update();
@@ -354,7 +405,50 @@ public class cameraLibrary {
             }
         }
         while (!inPositionX && !auton.isStopRequested()) {
-            pose1 = tagReferencePositionFromGoal();
+            pose1 = tagReferencePositionFromBlue();
+            if (pose1 == null) {
+                mainLibrary.telemetry.addData("No april tag found :(", pose1);
+                mainLibrary.telemetry.update();
+            } else {
+                inPositionX = moveX(pose1.x, x);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose1.x, x));
+                mainLibrary.telemetry.update();
+            }
+        }
+    }
+    public void autoPositionRed(double x, double y, double yaw) {
+        AprilTagPoseFtc pose;
+        AprilTagPoseFtc pose1;
+        AprilTagPoseFtc pose2;
+
+        boolean inPositionY = false;
+        boolean inPositionX = false;
+        boolean inPositionZ = false;
+
+        while (!inPositionZ && !auton.isStopRequested()) {
+            pose2 = tagReferencePositionFromRed();
+            if (pose2 == null) {
+                mainLibrary.telemetry.addData("No april tag found :(", pose2);
+                mainLibrary.telemetry.update();
+            } else {
+                inPositionZ = moveYaw(pose2.yaw, yaw);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose2.yaw, yaw));
+                mainLibrary.telemetry.update();
+            }
+        }
+        while (!inPositionY && !auton.isStopRequested()) {
+            pose = tagReferencePositionFromRed();
+            if (pose == null) {
+                mainLibrary.telemetry.addData("No april tag found :(", pose);
+                mainLibrary.telemetry.update();
+            } else {
+                inPositionY = moveY(pose.y, y);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking Y position %6.1f / %6.1f", pose.y, y));
+                mainLibrary.telemetry.update();
+            }
+        }
+        while (!inPositionX && !auton.isStopRequested()) {
+            pose1 = tagReferencePositionFromRed();
             if (pose1 == null) {
                 mainLibrary.telemetry.addData("No april tag found :(", pose1);
                 mainLibrary.telemetry.update();

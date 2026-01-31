@@ -69,11 +69,23 @@ public class autonBlueGoal extends LinearOpMode {
         AprilTagPoseFtc pose1;
         AprilTagPoseFtc pose2;
 
-        movement.moveBackward(48, speed);
+        movement.moveBackward(40, speed);
 
         sleep(200);
 
-        cameraLibrary.autoPositionGoal(X, Y, YAW);
+        cameraLibrary.autoPositionBlue(X, Y, YAW);
+
+        sleep(500);
+
+        movement.launchLittleBoy(power);
+
+        sleep(500);
+
+        movement.turnLeft(45, speed);
+
+        sleep(200);
+
+        movement.moveRight(24,speed);
 
         /*while (!inPositionZ && !isStopRequested()) {
             pose2 = cameraLibrary.tagReferencePositionFromGoal();
@@ -108,20 +120,6 @@ public class autonBlueGoal extends LinearOpMode {
                 telemetry.update();
             }
         }*/
-
-        movement.launchLittleBoy(power);
-
-        sleep(500);
-
-        movement.turnLeft(45, speed);
-
-        sleep(200);
-
-        movement.moveRight(24,speed);
-
-
-
-
 
     }
 }

@@ -67,7 +67,7 @@ public class movement {
             if (timer.milliseconds() > 2000) {
                 primeLaunch();
             }
-            if (timer.milliseconds() > 3000) {
+            if (timer.milliseconds() > 4500) {
                 restTHESERVO();
                 timer.reset();
                 i++;

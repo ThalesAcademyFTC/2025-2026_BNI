@@ -32,6 +32,8 @@ public class testAuton extends LinearOpMode {
 
     public detectedId motif = detectedId.UNKNOWN;
 
+    public boolean constant = true;
+
     public double distanceForShot; //needs a value
 
 
@@ -51,23 +53,16 @@ public class testAuton extends LinearOpMode {
 
         movement.restTHESERVO();
 
-        //cameraLibrary.initializeAprilTag();
+        cameraLibrary.initializeAprilTag();
 
         waitForStart();
 
-        movement.launchLittleBoy(1);
-
-        sleep(500);
-
-        movement.launchLittleBoy(1);
-
-        sleep(500);
-
-        movement.launchLittleBoy(1);
-
+        while (constant) {
+            cameraLibrary.tagReferencePositionFromBlue();
+            telemetry.update();
         }
 
 
-
     }
+}
 
