@@ -64,10 +64,10 @@ public class movement {
         timer.reset();
         for (int i = 0; i < 3;) {
             cannonLaunch(launchPower);
-            if (timer.milliseconds() > 2000) {
+            if (timer.milliseconds() >2000) {
                 primeLaunch();
             }
-            if (timer.milliseconds() > 4500) {
+            if (timer.milliseconds() > 3000) {
                 restTHESERVO();
                 timer.reset();
                 i++;

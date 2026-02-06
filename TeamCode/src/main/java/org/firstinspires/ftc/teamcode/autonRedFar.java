@@ -32,11 +32,11 @@ public class autonRedFar extends LinearOpMode {
 
     double speed = 0.5;
 
-    double X;
+    double X = -2;
 
-    double Y;
+    double Y = 110;
 
-    double YAW;
+    double YAW = -20;
 
     public void runOpMode() {
 
@@ -55,15 +55,23 @@ public class autonRedFar extends LinearOpMode {
         //start of the auton
         waitForStart();
 
-        movement.moveForward(3, speed);
+        movement.moveForward(13, speed);
 
         sleep(200);
 
-        cameraLibrary.autoPositionRed(X,Y,YAW);
+        movement.turnRight(25, speed);
 
         sleep(200);
 
-        movement.launchLittleBoy(1);
+        cameraLibrary.autoPositionRed(X,Y,-28);
+
+        sleep(200);
+
+        movement.moveRight(2, speed);
+
+        sleep(200);
+
+        movement.launchLittleBoy(.86);
 
         sleep(500);
 
@@ -72,5 +80,6 @@ public class autonRedFar extends LinearOpMode {
         sleep(200);
 
         movement.moveRight(24, speed);
+
     }
 }

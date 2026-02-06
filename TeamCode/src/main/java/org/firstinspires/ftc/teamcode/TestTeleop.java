@@ -16,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
@@ -49,9 +50,15 @@ public class TestTeleop extends OpMode {
 
     double constant = 1;
 
+    AprilTagPoseFtc pose;
+
     public static final String MOTIF = "MOTIF";
 
     Pose3D robotPosition = null;
+
+    boolean THEBOOZE = false;
+
+    double turn = .5;
 
     detectedId motif;
 
@@ -88,32 +95,34 @@ public class TestTeleop extends OpMode {
 
     public void loop() {
 
-
-/*
-        if (sensorLibrary.isColorHSV() == org.firstinspires.ftc.teamcode.sensorLibrary.colorValues.GREEN) {
-            ledValue = .5;
-        }
-        if (sensorLibrary.isColorHSV() == org.firstinspires.ftc.teamcode.sensorLibrary.colorValues.PURPLE) {
-            ledValue = .722;
-        }
-*/
-        if (motif == detectedId.GREEN_PURPLE_PURPLE) {
-            mainLibrary.rgbIndicator.setPosition(.280); //red
-        } else if (motif == detectedId.PURPLE_GREEN_PURPLE) {
-            mainLibrary.rgbIndicator.setPosition(.333); //orange
-        } else if (motif == detectedId.PURPLE_PURPLE_GREEN) {
-            mainLibrary.rgbIndicator.setPosition(.388); //yellow
-        } else {
-            telemetry.addData("April ID", motif);
-        }
-        //mainLibrary.rgbIndicator.setPosition(ledValue);
-        cameraLibrary.cameraTelemetry();
-        robotPosition = cameraLibrary.tagReferencePosition();
-
-
-
-
         telemetry.update();
+
+        /*
+        experimental blue goal teleop function that adds aim mode to the teleop controller
+        allowing for the camera to scan the april tag and constantly adjust and turn to reach
+        the ideal shooting position while still allowing fblr movement for manual shooting
+        adjustments.
+        */
+
+        pose = cameraLibrary.tagReferencePositionFromBlue();
+
+        if (gamepad1.right_trigger > .5) {
+
+            driverCentricMovement.driverMovement(gamepad1.left_stick_x, gamepad1.left_stick_y, turn);
+            THEBOOZE = cameraLibrary.moveYaw(cameraLibrary.FINAL_BLUE_YAW, pose.yaw);
+
+            if (THEBOOZE) {
+
+                turn = 0;
+                THEBOOZE = false;
+
+            }
+        } else {
+
+            driverCentricMovement.driverMovement(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            turn = .5;
+
+        }
 
     }
 }

@@ -1,19 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
-import android.system.Os;
-
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.IMU;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 @TeleOp
-public class Teleop extends OpMode {
+public class TeleopBlue extends OpMode {
     public driverCentricMovement driverCentricMovement;
 
     public fieldCentricMovement fieldCentricMovement;
@@ -40,7 +33,15 @@ public class Teleop extends OpMode {
 
     double last_time;
 
-    double power = .96;
+    double power = .87;
+
+    double times = 0;
+
+    double turn = .25;
+
+    boolean THEBOOZE = true;
+
+    public AprilTagPoseFtc pose;
 
     public void init() {
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
@@ -66,8 +67,8 @@ public class Teleop extends OpMode {
         //telemetry.addData("Alpha value", mainLibrary.colorSensor.alpha());
         //telemetry.addData("Color", sensorLibrary.isColorRGB());
         telemetry.addData("Motif Pattern is", blackboard.get(mainLibrary.motifPattern));
-        telemetry.addData("Motor Speed", () -> { return mainLibrary.cannonMotor1.getPower();});
-        telemetry.addData("Motor 2 Speed", () -> { return mainLibrary.cannonMotor2.getPower();});
+        telemetry.addData("Motor Speed", () -> { return power;});
+        telemetry.addData("Times (experimental)", () -> { return times;});
     }
     public void loop() {
 
@@ -75,13 +76,26 @@ public class Teleop extends OpMode {
 
 
         //sets the move function to controller values
-        double y = (-gamepad1.left_stick_y);
-        double x = (gamepad1.left_stick_x);
-        double turn = (gamepad1.right_stick_x/1.5);
 
+        pose = cameraLibrary.tagReferencePositionFromBlue();
 
-        driverCentricMovement.driverMovement(x, y, turn);
-        //fieldCentricMovement.fieldMovement(x, y, turn);
+        if (gamepad1.right_trigger > .5) {
+
+            driverCentricMovement.driverMovement(gamepad1.left_stick_x, gamepad1.left_stick_y, turn);
+            THEBOOZE = cameraLibrary.moveYaw(cameraLibrary.FINAL_BLUE_YAW, pose.yaw);
+
+            if (THEBOOZE) {
+
+                turn = 0;
+                THEBOOZE = false;
+
+            }
+        } else {
+
+            driverCentricMovement.driverMovement(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            turn = .25;
+
+        }
 
         if (gamepad2.left_bumper && mainLibrary.leftToggleToggle) {
 
@@ -116,21 +130,28 @@ public class Teleop extends OpMode {
             }
 
             curr_time = getRuntime();
-            if (curr_time > (last_time + 1.25)) {
+            if (curr_time > (last_time + 2 ) && times == 0) {
                 movement.primeLaunch();
+                times += 1;
             }
 
-            if (curr_time > (last_time + 1.75)) {
+            if (curr_time > (last_time + 1 ) && times > 0 && times <= 3) {
+                movement.primeLaunch();
+                times += 1;
+            } else if (times > 3) {
+                times = 0;
+            }
+
+            if (curr_time > (last_time + 2.1)) {
                 movement.restTHESERVO();
                 last_time = curr_time;
-                power -= .01;
             }
 
         } else if (gamepad2.right_trigger < .5 && gamepad2.left_trigger < .5) {
             last_time = 0.0;
             movement.cannonStop();
             movement.restTHESERVO();
-            power = .96;
+            times = 0;
         }
     }
 }

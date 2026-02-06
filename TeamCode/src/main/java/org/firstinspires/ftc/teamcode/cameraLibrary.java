@@ -85,6 +85,10 @@ public class cameraLibrary {
 
     public int aprilTagID_GPP = 21;
 
+    public double FINAL_RED_YAW = -20;
+
+    public double FINAL_BLUE_YAW = 13;
+
     VisionPortal.Builder builder = new VisionPortal.Builder();
 
     private Position cameraPosition = new Position(DistanceUnit.INCH,
