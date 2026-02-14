@@ -46,9 +46,9 @@ public class TeleopRed extends OpMode {
 
     double times = 0;
 
-    double turn = .25;
+    //double turn = .25;
 
-    boolean THEBOOZE2 = true;
+    //boolean THEBOOZE2 = true;
 
     public AprilTagPoseFtc pose;
 
@@ -83,15 +83,36 @@ public class TeleopRed extends OpMode {
 
         telemetry.update();
 
+        double x = (gamepad1.left_stick_x);
+        double y = (-gamepad1.left_stick_y);
+        double turn = (gamepad1.right_stick_x*.75);
+
+        driverCentricMovement.driverMovement(x, y, turn);
+
+        /*
+        pose = cameraLibrary.tagReferencePositionFromBlue();
+
+        if (gamepad1.a) {
+
+            while (pose.yaw != cameraLibrary.FINAL_BLUE_BEARING && !gamepad1.b) {
+
+                cameraLibrary.moveBearing(cameraLibrary.FINAL_BLUE_BEARING, pose.yaw);
+
+            }
+
+        }
+
+         */
+
 
         //sets the move function to controller values
 
-        pose = cameraLibrary.tagReferencePositionFromRed();
+        /*pose = cameraLibrary.tagReferencePositionFromRed();
 
         if (gamepad1.right_trigger > .5) {
 
             driverCentricMovement.driverMovement(gamepad1.left_stick_x, gamepad1.left_stick_y, turn);
-            THEBOOZE2 = cameraLibrary.moveYaw(cameraLibrary.FINAL_BLUE_YAW, pose.yaw);
+            THEBOOZE2 = cameraLibrary.moveBearing(cameraLibrary.FINAL_BLUE_BEARING, pose.yaw);
 
             if (THEBOOZE2) {
 
@@ -105,6 +126,8 @@ public class TeleopRed extends OpMode {
             turn = .25;
 
         }
+        */
+
 
         if (gamepad2.left_bumper && mainLibrary.leftToggleToggle) {
 

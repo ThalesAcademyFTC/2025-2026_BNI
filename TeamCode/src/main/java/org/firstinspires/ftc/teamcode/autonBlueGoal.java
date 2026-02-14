@@ -77,15 +77,15 @@ public class autonBlueGoal extends LinearOpMode {
 
         sleep(500);
 
-        movement.launchLittleBoy(power);
+        movement.launchLittleBoy(.9);
 
         sleep(500);
 
-        movement.turnLeft(45, speed);
+        movement.turnRight(45, speed);
 
         sleep(200);
 
-        movement.moveRight(24,speed);
+        movement.moveLeft(24,speed);
 
         /*while (!inPositionZ && !isStopRequested()) {
             pose2 = cameraLibrary.tagReferencePositionFromGoal();
@@ -93,7 +93,7 @@ public class autonBlueGoal extends LinearOpMode {
                 telemetry.addData("No april tag found :(", pose2);
                 telemetry.update();
             } else {
-                inPositionZ = cameraLibrary.moveYaw(pose2.yaw, cameraLibrary.DESIRED_YAW);
+                inPositionZ = cameraLibrary.moveBearing(pose2.yaw, cameraLibrary.DESIRED_YAW);
                 mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose2.yaw, cameraLibrary.DESIRED_YAW));
                 telemetry.update();
             }

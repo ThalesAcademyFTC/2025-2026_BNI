@@ -117,10 +117,10 @@ public class movement {
 
         mainLibrary.resetDriveEncoders();
 
-        mainLibrary.motorFL.setTargetPosition(-TickTarget);
-        mainLibrary.motorFR.setTargetPosition(TickTarget);
-        mainLibrary.motorBL.setTargetPosition(TickTarget);
-        mainLibrary.motorBR.setTargetPosition(-TickTarget);
+        mainLibrary.motorFL.setTargetPosition(TickTarget);
+        mainLibrary.motorFR.setTargetPosition(-TickTarget);
+        mainLibrary.motorBL.setTargetPosition(-TickTarget);
+        mainLibrary.motorBR.setTargetPosition(TickTarget);
 
         driverCentricMovement.driverMovement(speed, 0, 0);
 

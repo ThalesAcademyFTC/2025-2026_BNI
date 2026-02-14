@@ -34,9 +34,9 @@ public class autonRedGoal extends LinearOpMode {
 
     double X = 7.6;
 
-    final double Y = -61;
+    final double Y = 61;
 
-    final double YAW = 13;
+    final double YAW = -13;
 
     public void runOpMode() {
 
@@ -56,24 +56,26 @@ public class autonRedGoal extends LinearOpMode {
         //start of the auton
         waitForStart();
 
+        movement.moveLeft(12, .2);
+/*
         movement.moveBackward(40, speed);
 
         sleep(200);
 
-        cameraLibrary.autoPositionRed(X, Y, YAW);
+        cameraLibrary.autoPositionRed(X, Y, BEARING);
 
         sleep(500);
 
-        movement.turnRight(45, speed);
+        movement.turnLeft(45, speed);
 
         sleep(200);
 
-        movement.moveLeft(48, speed);
+        movement.moveRight(48, speed);
 
 
 
 
-     /*   }
+        }
 
         if (opModeIsActive()) {
 

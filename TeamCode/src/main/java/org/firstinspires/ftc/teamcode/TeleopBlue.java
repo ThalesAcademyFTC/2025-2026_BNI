@@ -43,6 +43,10 @@ public class TeleopBlue extends OpMode {
 
     public AprilTagPoseFtc pose;
 
+    double BEARING_ADJUSTMENT = -5;
+
+    boolean autoAimActive = false;
+
     public void init() {
         mainLibrary = new mainLibrary(this, org.firstinspires.ftc.teamcode.mainLibrary.Drivetrain.MECHANUM);
 
@@ -51,6 +55,8 @@ public class TeleopBlue extends OpMode {
         fieldCentricMovement = new fieldCentricMovement(mainLibrary);
 
         movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
+
+        cameraLibrary = new cameraLibrary(this, mainLibrary, movement, driverCentricMovement);
 
         //start pos 0.7
         movement.restTHESERVO();
@@ -69,33 +75,61 @@ public class TeleopBlue extends OpMode {
         telemetry.addData("Motif Pattern is", blackboard.get(mainLibrary.motifPattern));
         telemetry.addData("Motor Speed", () -> { return power;});
         telemetry.addData("Times (experimental)", () -> { return times;});
+
+        mainLibrary.rgbIndicator.setPosition(.277);
+
+        cameraLibrary.initializeAprilTag();
     }
     public void loop() {
 
         telemetry.update();
 
-
-        //sets the move function to controller values
-
         pose = cameraLibrary.tagReferencePositionFromBlue();
 
-        if (gamepad1.right_trigger > .5) {
-
-            driverCentricMovement.driverMovement(gamepad1.left_stick_x, gamepad1.left_stick_y, turn);
-            THEBOOZE = cameraLibrary.moveYaw(cameraLibrary.FINAL_BLUE_YAW, pose.yaw);
-
-            if (THEBOOZE) {
-
-                turn = 0;
-                THEBOOZE = false;
-
+        if (pose != null) {
+            //is detected
+            if (pose.bearing >= 0 && pose.bearing <= 4) {
+                //in right pos
+                mainLibrary.rgbIndicator.setPosition(.5);
+            } else {
+                mainLibrary.rgbIndicator.setPosition(.611);
             }
         } else {
-
-            driverCentricMovement.driverMovement(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            turn = .25;
-
+            //not detected
+            mainLibrary.rgbIndicator.setPosition(.278);
         }
+
+        double x = (gamepad1.left_stick_x*.75);
+        double y = (-gamepad1.left_stick_y*.75);
+        double turn = (gamepad1.right_stick_x*.75);
+
+        /*if (gamepad1.a) {
+            if (pose != null) {
+                pose = cameraLibrary.tagReferencePositionFromBlue();
+                if (pose != null) {
+                    double bearing = pose.bearing;
+                    mainLibrary.rgbIndicator.setPosition(.722);
+                    autoAimActive = true;
+                    double initialDirection = 0; // get imu yaw
+                    turn = bearing > 0 ? 0.2 : -0.2;
+                } else {
+                    mainLibrary.rgbIndicator.setPosition(0);  // april tag not found
+                }
+            }
+            if(autoAimActive) {
+                    double currentDirection; // get from imu
+
+                }
+            }
+        } else {
+            pose = null;
+            autoAimActive = false;
+            mainLibrary.rgbIndicator.setPosition(0);
+        }
+*/
+        driverCentricMovement.driverMovement(x, y, turn);
+
+        //sets the move function to controller values
 
         if (gamepad2.left_bumper && mainLibrary.leftToggleToggle) {
 
@@ -130,19 +164,10 @@ public class TeleopBlue extends OpMode {
             }
 
             curr_time = getRuntime();
-            if (curr_time > (last_time + 2 ) && times == 0) {
+            if (curr_time > (last_time + 2)) {
                 movement.primeLaunch();
-                times += 1;
             }
-
-            if (curr_time > (last_time + 1 ) && times > 0 && times <= 3) {
-                movement.primeLaunch();
-                times += 1;
-            } else if (times > 3) {
-                times = 0;
-            }
-
-            if (curr_time > (last_time + 2.1)) {
+            if (curr_time > (last_time + 3)) {
                 movement.restTHESERVO();
                 last_time = curr_time;
             }

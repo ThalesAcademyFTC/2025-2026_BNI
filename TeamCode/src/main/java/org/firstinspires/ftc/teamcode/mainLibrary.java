@@ -89,6 +89,7 @@ public class mainLibrary {
     public double tagOrientationY;
     public double tagOrientationZ;
 
+    public double missedShots = 0;
 
 
     public mainLibrary(OpMode opMode, Drivetrain drive) {
@@ -137,7 +138,7 @@ public class mainLibrary {
 
                 //servos gotted in hardware map
 
-                //rgbIndicator = hwMap.servo.get("rgbIndicator");
+                rgbIndicator = hwMap.servo.get("rgbIndicator");
 
                 //sensors defined here
 

@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import static com.qualcomm.robotcore.eventloop.opmode.OpMode.blackboard;
+import android.util.Size;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -87,7 +87,7 @@ public class cameraLibrary {
 
     public double FINAL_RED_YAW = -20;
 
-    public double FINAL_BLUE_YAW = 13;
+    public double FINAL_BLUE_BEARING = 13;
 
     VisionPortal.Builder builder = new VisionPortal.Builder();
 
@@ -107,7 +107,11 @@ public class cameraLibrary {
             builder.setCamera(BuiltinCameraDirection.BACK);
         }
 
-        builder.addProcessor(aprilTag);
+        Size size = new Size(1280, 720);
+
+        builder.addProcessor(aprilTag).setCameraResolution(size);
+
+        //builder.addProcessor(aprilTag);
 
         VisionPortal visionPortal = builder.build();
 
@@ -136,14 +140,14 @@ public class cameraLibrary {
 
     public double yawAccordingToAprilTag() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-        double yawValue = 0;
+        double bearingValue = 0;
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
                 if (!detection.metadata.name.contains("Obelisk")) {
-                    yawValue = detection.robotPose.getOrientation().getYaw();
+                    bearingValue = detection.ftcPose.bearing;
                 }
             }
-        } return yawValue;
+        } return bearingValue;
 
 
     }
@@ -286,15 +290,12 @@ public class cameraLibrary {
         return false;
     }
 
-    public boolean moveYaw(double current, double desiredYaw) {
-        if (current >= desiredYaw - 4 && current <= desiredYaw + 4) {
-
+    public boolean moveBearing(double current, double desiredBearing) {
+        if (Math.abs(current - desiredBearing) < 6) {
             return true;
-
         } else {
-
-            driverCentricMovement.driverMovement(0,0,-.2);
-
+            driverCentricMovement.driverMovement(0,0,
+                        (desiredBearing - current) > 0 ? 0.2 : -0.2);
         }
         return false;
     }
@@ -377,7 +378,7 @@ public class cameraLibrary {
 
 }
 
-    public void autoPositionBlue(double x, double y, double yaw) {
+    public void autoPositionBlue(double x, double y, double bearing) {
         AprilTagPoseFtc pose;
         AprilTagPoseFtc pose1;
         AprilTagPoseFtc pose2;
@@ -392,8 +393,8 @@ public class cameraLibrary {
                 mainLibrary.telemetry.addData("No april tag found :(", pose2);
                 mainLibrary.telemetry.update();
             } else {
-                inPositionZ = moveYaw(pose2.yaw, yaw);
-                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose2.yaw, yaw));
+                inPositionZ = moveBearing(pose2.bearing, bearing);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose2.yaw, bearing));
                 mainLibrary.telemetry.update();
             }
         }
@@ -419,48 +420,74 @@ public class cameraLibrary {
                 mainLibrary.telemetry.update();
             }
         }
+
+        mainLibrary.rgbIndicator.setPosition(.5);
+
     }
-    public void autoPositionRed(double x, double y, double yaw) {
+
+    public void moveBearingRed(double bearing) {
+
         AprilTagPoseFtc pose;
-        AprilTagPoseFtc pose1;
-        AprilTagPoseFtc pose2;
+
+        boolean inPositionB = false;
+
+        while (!inPositionB && !auton.isStopRequested()) {
+            pose = tagReferencePositionFromRed();
+            if (pose == null) {
+                mainLibrary.telemetry.addData("No april tag found :(", pose);
+                mainLibrary.telemetry.update();
+            } else {
+                inPositionB = moveBearing(pose.bearing, bearing);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose.bearing, bearing));
+                mainLibrary.telemetry.update();
+            }
+        }
+
+    }
+    public void autoPositionRed(double x, double y, double bearing) {
+        AprilTagPoseFtc pose3;
+        AprilTagPoseFtc pose4;
+        AprilTagPoseFtc pose5;
 
         boolean inPositionY = false;
         boolean inPositionX = false;
         boolean inPositionZ = false;
 
         while (!inPositionZ && !auton.isStopRequested()) {
-            pose2 = tagReferencePositionFromRed();
-            if (pose2 == null) {
-                mainLibrary.telemetry.addData("No april tag found :(", pose2);
+            pose5 = tagReferencePositionFromRed();
+            if (pose5 == null) {
+                mainLibrary.telemetry.addData("No april tag found :(", pose5);
                 mainLibrary.telemetry.update();
             } else {
-                inPositionZ = moveYaw(pose2.yaw, yaw);
-                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose2.yaw, yaw));
+                inPositionZ = moveBearing(pose5.bearing, bearing);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose5.yaw, bearing));
                 mainLibrary.telemetry.update();
             }
         }
+
         while (!inPositionY && !auton.isStopRequested()) {
-            pose = tagReferencePositionFromRed();
-            if (pose == null) {
-                mainLibrary.telemetry.addData("No april tag found :(", pose);
+            pose4 = tagReferencePositionFromRed();
+            if (pose4 == null) {
+                mainLibrary.telemetry.addData("No april tag found :(", pose4);
                 mainLibrary.telemetry.update();
             } else {
-                inPositionY = moveY(pose.y, y);
-                mainLibrary.telemetry.addLine(String.format("Tag found tracking Y position %6.1f / %6.1f", pose.y, y));
+                inPositionY = moveY(pose4.y, y);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking Y position %6.1f / %6.1f", pose4.y, y));
                 mainLibrary.telemetry.update();
             }
         }
         while (!inPositionX && !auton.isStopRequested()) {
-            pose1 = tagReferencePositionFromRed();
-            if (pose1 == null) {
-                mainLibrary.telemetry.addData("No april tag found :(", pose1);
+            pose3 = tagReferencePositionFromRed();
+            if (pose3 == null) {
+                mainLibrary.telemetry.addData("No april tag found :(", pose3);
                 mainLibrary.telemetry.update();
             } else {
-                inPositionX = moveX(pose1.x, x);
-                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose1.x, x));
+                inPositionX = moveX(pose3.x, x);
+                mainLibrary.telemetry.addLine(String.format("Tag found tracking X position %6.1f / %6.1f", pose3.x, x));
                 mainLibrary.telemetry.update();
             }
         }
+
+        mainLibrary.rgbIndicator.setPosition(.5);
     }
 }

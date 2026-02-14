@@ -1,25 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.cameraLibrary.detectedId;
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEasy;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-
-import java.util.List;
 
 @TeleOp
 public class TestTeleop extends OpMode {
@@ -76,9 +66,6 @@ public class TestTeleop extends OpMode {
 
         cameraLibrary.initializeAprilTag();
 
-        motif = (detectedId) blackboard.get("MOTIF");
-
-
         telemetry.addData("Touch sensor state", mainLibrary.touchSensor.isPressed());
         telemetry.addData("Distance from distance sensor", mainLibrary.distanceSensor.getDistance(DistanceUnit.CM));
         telemetry.addData("Red value", mainLibrary.colorSensor.red());
@@ -109,7 +96,7 @@ public class TestTeleop extends OpMode {
         if (gamepad1.right_trigger > .5) {
 
             driverCentricMovement.driverMovement(gamepad1.left_stick_x, gamepad1.left_stick_y, turn);
-            THEBOOZE = cameraLibrary.moveYaw(cameraLibrary.FINAL_BLUE_YAW, pose.yaw);
+            THEBOOZE = cameraLibrary.moveBearing(cameraLibrary.FINAL_BLUE_BEARING, pose.yaw);
 
             if (THEBOOZE) {
 

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptAprilTagEasy;
 import org.firstinspires.ftc.teamcode.cameraLibrary.detectedId;
+import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 @Autonomous
@@ -32,11 +33,11 @@ public class autonBlueFar extends LinearOpMode {
 
     double speed = 0.5;
 
-    double X;
+    double X = 4;
 
     double Y = 112;
 
-    double YAW = 20;
+    double BEARING_ADJUSTMENT = 5;
 
 
     public void runOpMode() {
@@ -58,21 +59,18 @@ public class autonBlueFar extends LinearOpMode {
 
         movement.moveForward(7, speed);
 
-        movement.turnLeft(25, speed);
+        sleep(200);
+
+        AprilTagPoseFtc pose;
+
+        while ((pose = cameraLibrary.tagReferencePositionFromBlue()) == null && !isStopRequested()) {
+            sleep(50);
+        }
+        double bearing = pose.bearing;
 
         sleep(200);
 
-        movement.moveForward(12, speed);
-
-        sleep(200);
-
-        movement.turnLeft(10, .1);
-
-        sleep(200);
-
-        cameraLibrary.autoPositionBlue(X,Y,YAW);
-
-        mainLibrary.restMotors();
+        movement.turnLeft(bearing + BEARING_ADJUSTMENT, .2);
 
         sleep(200);
 
@@ -80,7 +78,7 @@ public class autonBlueFar extends LinearOpMode {
 
         sleep(200);
 
-        movement.launchLittleBoy(1);
+        movement.launchLittleBoy(.8);
 
         sleep(500);
 
@@ -90,6 +88,7 @@ public class autonBlueFar extends LinearOpMode {
 
         movement.moveLeft(24, speed);
 
-
     }
+
 }
+
