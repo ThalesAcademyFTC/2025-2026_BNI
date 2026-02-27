@@ -37,7 +37,7 @@ public class autonBlueFar extends LinearOpMode {
 
     double Y = 112;
 
-    double BEARING_ADJUSTMENT = 5;
+    double BEARING_ADJUSTMENT = 7;
 
 
     public void runOpMode() {

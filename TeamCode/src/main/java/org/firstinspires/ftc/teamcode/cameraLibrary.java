@@ -370,6 +370,10 @@ public class cameraLibrary {
                 mainLibrary.telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
                 mainLibrary.telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
                 mainLibrary.telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
+                mainLibrary.telemetry.addLine("Key:");
+                mainLibrary.telemetry.addLine("XYZ = X(right), Y(forward, Z(up) distance");
+                mainLibrary.telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation");
+                mainLibrary.telemetry.addLine("Range, Bearing & Elevation");
             } else {
                 mainLibrary.telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
                 mainLibrary.telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
@@ -420,6 +424,7 @@ public class cameraLibrary {
                 mainLibrary.telemetry.update();
             }
         }
+        //robot.explode();
 
         mainLibrary.rgbIndicator.setPosition(.5);
 

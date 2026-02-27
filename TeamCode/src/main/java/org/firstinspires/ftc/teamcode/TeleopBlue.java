@@ -33,7 +33,7 @@ public class TeleopBlue extends OpMode {
 
     double last_time;
 
-    double power = .87;
+    double power = .84;
 
     double times = 0;
 
@@ -62,6 +62,7 @@ public class TeleopBlue extends OpMode {
         movement.restTHESERVO();
 
         sensorLibrary = new sensorLibrary(mainLibrary);
+        //mainLibrary.explode();
 
         //telemetry.addData("Motif pattern", blackboard.get())
 
@@ -88,7 +89,7 @@ public class TeleopBlue extends OpMode {
 
         if (pose != null) {
             //is detected
-            if (pose.bearing >= 0 && pose.bearing <= 4) {
+            if (pose.bearing >= -10 && pose.bearing <= 0) {
                 //in right pos
                 mainLibrary.rgbIndicator.setPosition(.5);
             } else {

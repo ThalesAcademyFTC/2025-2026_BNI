@@ -37,7 +37,6 @@ public class aprilTagLocalizationAuton extends LinearOpMode {
         cameraLibrary = new cameraLibrary(this, mainLibrary, movement, driverCentricMovement);
         movement = new movement(mainLibrary, driverCentricMovement, cameraLibrary);
         cameraLibrary.initializeAprilTag();
-        telemetry.addData("Yaw angle", () -> {return cameraLibrary.yawAccordingToAprilTag();});
 
         waitForStart();
 

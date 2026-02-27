@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import static android.os.SystemClock.sleep;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
 
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
@@ -39,6 +40,14 @@ import java.util.List;
 public class mainLibrary {
     //This class will act as our "goldfish" or "robot" class for the year
     public HardwareMap hwMap;
+    int x;
+    double y;
+    float yx;
+    char xy='x';
+    String yxz;
+
+    boolean z;
+
 
     public LinearOpMode auton;
     public double ElapsedTime;
@@ -201,6 +210,16 @@ public class mainLibrary {
                 finished = true;
             }
         }
+    }
+
+    public void explode(){
+        boolean finished = false;
+        int i=3;
+        telemetry.addData("",String.valueOf(i));
+        sleep(1000);
+        telemetry.addData("...",String.valueOf(i--));
+        sleep(1000);
+        telemetry.addData("...",String.valueOf(i-1));
     }
 
 }
