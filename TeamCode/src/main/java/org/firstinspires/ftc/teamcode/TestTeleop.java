@@ -66,18 +66,6 @@ public class TestTeleop extends OpMode {
 
         cameraLibrary.initializeAprilTag();
 
-        telemetry.addData("Touch sensor state", mainLibrary.touchSensor.isPressed());
-        telemetry.addData("Distance from distance sensor", mainLibrary.distanceSensor.getDistance(DistanceUnit.CM));
-        telemetry.addData("Red value", mainLibrary.colorSensor.red());
-        telemetry.addData("Blue value", mainLibrary.colorSensor.blue());
-        telemetry.addData("Green value", mainLibrary.colorSensor.green());
-        telemetry.addData("Alpha value", mainLibrary.colorSensor.alpha());
-        telemetry.addData("ColorRGB", sensorLibrary.isColorRGB());
-        telemetry.addData("ColorHSV", sensorLibrary.isColorHSV());
-        telemetry.addData("Color sensor distance in cm", mainLibrary.colorSensor.getDistance(DistanceUnit.CM));
-        telemetry.addData("Is PurpleRGB?", sensorLibrary.IsPurple());
-        telemetry.addData("ServoPos value for rgb indicator", ledValue);
-
     }
 
     public void loop() {
@@ -91,25 +79,12 @@ public class TestTeleop extends OpMode {
         adjustments.
         */
 
-        pose = cameraLibrary.tagReferencePositionFromBlue();
+        double x = (gamepad1.left_stick_x*.75);
+        double y = (-gamepad1.left_stick_y*.75);
+        double turn = (gamepad1.right_stick_x*.75);
 
-        if (gamepad1.right_trigger > .5) {
+        driverCentricMovement.driverMovement(x,y,turn);
 
-            driverCentricMovement.driverMovement(gamepad1.left_stick_x, gamepad1.left_stick_y, turn);
-            THEBOOZE = cameraLibrary.moveBearing(cameraLibrary.FINAL_BLUE_BEARING, pose.yaw);
-
-            if (THEBOOZE) {
-
-                turn = 0;
-                THEBOOZE = false;
-
-            }
-        } else {
-
-            driverCentricMovement.driverMovement(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            turn = .5;
-
-        }
 
     }
 }

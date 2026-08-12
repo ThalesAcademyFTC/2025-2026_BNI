@@ -66,7 +66,8 @@ public class mainLibrary {
 
     //defines motors to all classes that call main/mainlibrary
 
-    public DcMotorEx motorFL, motorFR, motorBL, motorBR, cannonMotor1, cannonMotor2, intakeMotor;
+    public DcMotorEx motorFL, motorFR, motorBL, motorBR, cannonMotor1, cannonMotor2, intakeMotor, suspensionMotor1,
+            suspensionMotor2;
 
     public Servo THESERVO;
 
@@ -78,7 +79,7 @@ public class mainLibrary {
 
     public TouchSensor touchSensor;
 
-    public Rev2mDistanceSensor distanceSensor;
+    public Rev2mDistanceSensor distanceSensor, suspensionDistance1, suspensionDistance2;
 
     public WebcamName camera;
 
@@ -134,9 +135,11 @@ public class mainLibrary {
                 motorFR = (DcMotorEx) hwMap.dcMotor.get("motorFR");
                 motorBL = (DcMotorEx) hwMap.dcMotor.get("motorBL");
                 motorBR = (DcMotorEx) hwMap.dcMotor.get("motorBR");
-                cannonMotor1 = (DcMotorEx) hwMap.dcMotor.get("cannonMotor1");
-                cannonMotor2 = (DcMotorEx) hwMap.dcMotor.get("cannonMotor2");
+                //cannonMotor1 = (DcMotorEx) hwMap.dcMotor.get("cannonMotor1");
+                //cannonMotor2 = (DcMotorEx) hwMap.dcMotor.get("cannonMotor2");
                 //intakeMotor = (DcMotorEx) hwMap.dcMotor.get("intakeMotor");
+                suspensionMotor1 = (DcMotorEx) hwMap.dcMotor.get("suspensionMotor1");
+                suspensionMotor2 = (DcMotorEx) hwMap.dcMotor.get("suspensionMotor2");
                 THESERVO = hwMap.servo.get("THESERVO");
 
                 //If a motor direction needs to be flipped:
@@ -147,12 +150,13 @@ public class mainLibrary {
 
                 //servos gotted in hardware map
 
-                rgbIndicator = hwMap.servo.get("rgbIndicator");
+                //rgbIndicator = hwMap.servo.get("rgbIndicator");
 
                 //sensors defined here
 
                 //touchSensor =  hwMap.touchSensor.get("TouchSensor");
-                //distanceSensor = hwMap.get(Rev2mDistanceSensor.class,"DistanceSensor");
+                suspensionDistance1 = hwMap.get(Rev2mDistanceSensor.class,"suspensionDistance1");
+                suspensionDistance2 = hwMap.get(Rev2mDistanceSensor.class, "suspensionDistance2");
                 //colorSensor = hwMap.get(RevColorSensorV3.class,"ColorSensor");
 
                 IMU imu = hwMap.get(IMU.class, "imu");
@@ -171,6 +175,16 @@ public class mainLibrary {
         }
         switch (drive) {
             case TEST:
+                motorFL = (DcMotorEx) hwMap.dcMotor.get("motorFL");
+                motorFR = (DcMotorEx) hwMap.dcMotor.get("motorFR");
+                motorBL = (DcMotorEx) hwMap.dcMotor.get("motorBL");
+                motorBR = (DcMotorEx) hwMap.dcMotor.get("motorBR");
+
+                motorFL.setDirection(DcMotorSimple.Direction.REVERSE);
+                motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
+                //motorFR.setDirection(DcMotorSimple.Direction.REVERSE);
+                //motorBR.setDirection(DcMotorSimple.Direction.REVERSE);
+
                 //pass
                 break;
         }
@@ -211,17 +225,6 @@ public class mainLibrary {
             }
         }
     }
-
-    public void explode(){
-        boolean finished = false;
-        int i=3;
-        telemetry.addData("",String.valueOf(i));
-        sleep(1000);
-        telemetry.addData("...",String.valueOf(i--));
-        sleep(1000);
-        telemetry.addData("...",String.valueOf(i-1));
-    }
-
 }
 //
 

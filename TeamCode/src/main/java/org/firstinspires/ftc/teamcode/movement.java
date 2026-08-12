@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 public class movement {
 
     public mainLibrary mainLibrary;
@@ -42,7 +44,11 @@ public class movement {
     public void cannonStop() {
         mainLibrary.cannonMotor1.setPower(0);
         mainLibrary.cannonMotor2.setPower(0);
+        mainLibrary.cannonMotor1.getVelocity(AngleUnit.DEGREES);
+        mainLibrary.cannonMotor2.getVelocity(AngleUnit.DEGREES);
     }
+
+
 
     public void primeLaunch() {
         mainLibrary.THESERVO.setPosition(.34);
