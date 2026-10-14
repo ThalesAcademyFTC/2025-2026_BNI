@@ -79,11 +79,7 @@ public class TestTeleop extends OpMode {
         adjustments.
         */
 
-        double x = (gamepad1.left_stick_x*.75);
-        double y = (-gamepad1.left_stick_y*.75);
-        double turn = (gamepad1.right_stick_x*.75);
-
-        driverCentricMovement.driverMovement(x,y,turn);
+        cameraLibrary.tagReferencePosition();
 
 
     }
